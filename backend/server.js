@@ -125,6 +125,10 @@ Bu mesaj portfolio sitenizden otomatik olarak gönderilmiştir.
     return { subject, body }
 }
 
+app.get('/', (req, res) => {
+    res.status(200).json({ message: 'Eylem Portfolio API is running!' });
+});
+
 // Visit counter endpoint
 app.get('/api/visit', async(req, res) => {
     try {
