@@ -1,0 +1,21 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Messages collection - anyone can write, no one can read
+    match /messages/{messageId} {
+      allow write: if true;  // Anyone can write messages
+      allow read: if false;  // No one can read messages (admin only)
+    }
+    
+    // Visits collection - anyone can write, no one can read
+    match /visits/{visitId} {
+      allow write: if true;  // Anyone can write visit data
+      allow read: if false;  // No one can read visit data (admin only)
+    }
+    
+    // Default rule - deny all
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+} 
