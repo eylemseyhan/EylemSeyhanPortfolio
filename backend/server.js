@@ -14,18 +14,27 @@ app.use(cors())
 app.use(express.json())
 
 // Firebase Admin SDK initialization
-if (process.env.FIREBASE_PROJECT_ID && process.env.FIREBASE_CLIENT_EMAIL && process.env.FIREBASE_PRIVATE_KEY) {
+try {
+    const privateKey = process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n');
+
+    if (!process.env.FIREBASE_PROJECT_ID || !process.env.FIREBASE_CLIENT_EMAIL || !privateKey) {
+        throw new Error('Firebase credentials not set in environment variables');
+    }
+
     admin.initializeApp({
         credential: admin.credential.cert({
             projectId: process.env.FIREBASE_PROJECT_ID,
             clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-            privateKey: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n')
+            privateKey: privateKey
         })
-    })
-} else {
-    console.warn('Firebase credentials not found. Some features may not work.')
-        // Initialize with default credentials for development
-    admin.initializeApp()
+    });
+    console.log('Firebase Admin SDK initialized successfully.');
+
+} catch (error) {
+    console.error('Failed to initialize Firebase Admin SDK:', error);
+    // Değişkenler olmadan sunucunun çalışmasını engellemek için
+    // uygulamayı başlatma kodunun geri kalanını atlayabilir veya çıkabiliriz.
+    // Şimdilik sadece logluyoruz, ama bu sunucunun Firestore'a erişemeyeceği anlamına gelir.
 }
 
 const db = admin.firestore()
