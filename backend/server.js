@@ -1,5 +1,6 @@
 const express = require('express')
 const cors = require('cors')
+const compression = require('compression')
 const admin = require('firebase-admin')
 const Redis = require('redis')
 const nodemailer = require('nodemailer')
@@ -11,6 +12,7 @@ const port = process.env.PORT || 3000
 
 // Middleware
 app.use(cors())
+app.use(compression()) // Gzip compression
 app.use(express.json())
 
 // Firebase Admin SDK initialization
@@ -39,17 +41,51 @@ try {
 
 const db = admin.firestore()
 
+// Firestore ayarları
+db.settings({
+    ignoreUndefinedProperties: true,
+    timeoutSeconds: 30
+})
+
 // Redis client setup
 let redisClient = null
 let rateLimiter = null
 
 if (process.env.REDIS_URL) {
     redisClient = Redis.createClient({
-        url: process.env.REDIS_URL
+        url: process.env.REDIS_URL,
+        socket: {
+            connectTimeout: 5000,
+            lazyConnect: true,
+            reconnectStrategy: (retries) => {
+                if (retries > 10) {
+                    console.error('Redis connection failed after 10 retries')
+                    return false
+                }
+                return Math.min(retries * 100, 3000)
+            }
+        }
     })
 
-    redisClient.on('error', (err) => console.log('Redis Client Error', err))
-    redisClient.connect()
+    redisClient.on('error', (err) => {
+        console.log('Redis Client Error:', err.message)
+            // Redis hatası durumunda cache'i devre dışı bırak
+        redisClient = null
+    })
+
+    redisClient.on('connect', () => {
+        console.log('Redis connected successfully')
+    })
+
+    redisClient.on('ready', () => {
+        console.log('Redis is ready')
+    })
+
+    // Redis'e bağlan
+    redisClient.connect().catch(err => {
+        console.warn('Redis connection failed:', err.message)
+        redisClient = null
+    })
 
     // Rate limiter setup
     rateLimiter = new RateLimiterRedis({
@@ -59,7 +95,7 @@ if (process.env.REDIS_URL) {
         duration: 60 * 15, // per 15 minutes
     })
 } else {
-    console.warn('Redis URL not found. Rate limiting will be disabled.')
+    console.warn('Redis URL not found. Rate limiting and caching will be disabled.')
 }
 
 // Email transporter setup
@@ -281,34 +317,98 @@ app.post('/api/contact', async(req, res) => {
 // Projects endpoint
 app.get('/api/projects', async (req, res) => {
     try {
-        const projectsSnapshot = await db.collection('projects').orderBy('order', 'asc').get();
-        if (projectsSnapshot.empty) {
-            return res.status(404).json({ error: 'No projects found' });
+        // Cache key oluştur
+        const cacheKey = 'projects:all'
+        
+        // Redis cache kontrolü
+        if (redisClient) {
+            try {
+                const cachedProjects = await redisClient.get(cacheKey)
+                if (cachedProjects) {
+                    console.log('Projects served from cache')
+                    return res.json(JSON.parse(cachedProjects))
+                }
+            } catch (cacheError) {
+                console.warn('Cache error:', cacheError.message)
+            }
         }
-        const projects = projectsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-        res.json(projects);
+
+        // Firestore'dan projeleri getir (sadece gerekli alanları)
+        const projectsSnapshot = await db.collection('projects')
+            .orderBy('order', 'asc')
+            .select('title', 'description', 'coverImageUrl', 'technologies', 'githubUrl', 'liveUrl', 'order')
+            .get()
+
+        if (projectsSnapshot.empty) {
+            return res.status(404).json({ error: 'No projects found' })
+        }
+
+        const projects = projectsSnapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
+        }))
+
+        // Cache'e kaydet (5 dakika)
+        if (redisClient) {
+            try {
+                await redisClient.setEx(cacheKey, 300, JSON.stringify(projects))
+            } catch (cacheError) {
+                console.warn('Cache save error:', cacheError.message)
+            }
+        }
+
+        console.log(`Projects loaded: ${projects.length} projects`)
+        res.json(projects)
     } catch (error) {
-        console.error('Error fetching projects:', error);
-        res.status(500).json({ error: 'Failed to fetch projects' });
+        console.error('Error fetching projects:', error)
+        res.status(500).json({ error: 'Failed to fetch projects' })
     }
-});
+})
 
 // Single project endpoint
 app.get('/api/projects/:id', async (req, res) => {
     try {
-        const projectId = req.params.id;
-        const projectDoc = await db.collection('projects').doc(projectId).get();
-
-        if (!projectDoc.exists) {
-            return res.status(404).json({ error: 'Project not found' });
+        const projectId = req.params.id
+        
+        // Cache key oluştur
+        const cacheKey = `project:${projectId}`
+        
+        // Redis cache kontrolü
+        if (redisClient) {
+            try {
+                const cachedProject = await redisClient.get(cacheKey)
+                if (cachedProject) {
+                    console.log(`Project ${projectId} served from cache`)
+                    return res.json(JSON.parse(cachedProject))
+                }
+            } catch (cacheError) {
+                console.warn('Cache error:', cacheError.message)
+            }
         }
 
-        res.json({ id: projectDoc.id, ...projectDoc.data() });
+        const projectDoc = await db.collection('projects').doc(projectId).get()
+
+        if (!projectDoc.exists) {
+            return res.status(404).json({ error: 'Project not found' })
+        }
+
+        const project = { id: projectDoc.id, ...projectDoc.data() }
+
+        // Cache'e kaydet (10 dakika)
+        if (redisClient) {
+            try {
+                await redisClient.setEx(cacheKey, 600, JSON.stringify(project))
+            } catch (cacheError) {
+                console.warn('Cache save error:', cacheError.message)
+            }
+        }
+
+        res.json(project)
     } catch (error) {
-        console.error('Error fetching single project:', error);
-        res.status(500).json({ error: 'Failed to fetch project' });
+        console.error('Error fetching single project:', error)
+        res.status(500).json({ error: 'Failed to fetch project' })
     }
-});
+})
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
