@@ -56,7 +56,7 @@
   font-size: 1.1rem;
   border-radius: 50px; /* Bubbly, friendly shape */
   background: linear-gradient(45deg, #c026d3, #22d3ee);
-  border: 2px solid rgba(255, 255, 255, 0.4);
+  
   box-shadow: 0 8px 25px rgba(162, 28, 175, 0.3);
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   transform: translateY(0);

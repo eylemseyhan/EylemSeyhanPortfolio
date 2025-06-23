@@ -15,79 +15,88 @@ const socials = [
 </script>
 
 <template>
-  <nav class="fixed left-4 top-1/2 -translate-y-1/2 z-20">
-    <div class="social-box">
+  <div class="w-full max-w-4xl mx-auto px-4">
+
+    
+    <div class="flex justify-center items-center gap-6">
       <a
         v-for="social in socials"
         :key="social.label"
         :href="social.href"
         target="_blank"
-        class="item"
+        class="social-item cursor-hover transition-all duration-500 ease-out hover:scale-110 hover:rotate-6 hover:drop-shadow-[0_0_20px_#06b6d4]"
         :aria-label="social.label"
         v-html="social.icon"
       >
       </a>
     </div>
-  </nav>
+  </div>
 </template>
 
-<style>
-/* Register the custom property for the animation */
-@property --fill-color {
-  syntax: "<percentage>";
-  inherits: true;
-  initial-value: 0%;
+<style scoped>
+/* Modern sinematik hover efektleri */
+.cursor-hover {
+  transform-style: preserve-3d;
+  perspective: 1000px;
 }
 
-.social-box {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1.5rem;
+.cursor-hover:hover {
+  animation: glow-pulse 2s ease-in-out infinite;
 }
 
-.social-box .item {
+@keyframes glow-pulse {
+  0%, 100% {
+    filter: drop-shadow(0 0 16px #a78bfa);
+  }
+  50% {
+    filter: drop-shadow(0 0 24px #a78bfa) drop-shadow(0 0 32px #a78bfa);
+  }
+}
+
+.social-item {
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 3.5rem;  /* 56px */
-  height: 3.5rem; /* 56px */
+  width: 4rem;  /* 64px */
+  height: 4rem; /* 64px */
   color: #c5c5c5;
-  background-color: #242529;
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.1) 0%, rgba(6, 182, 212, 0.1) 100%);
+  border: 2px solid rgba(168, 85, 247, 0.3);
   border-radius: 50%;
-  transition: color 0.2s ease-in-out, box-shadow 0.4s ease-in-out;
+  backdrop-filter: blur(10px);
+  box-shadow: 
+    0 0 20px rgba(168, 85, 247, 0.2),
+    inset 0 0 20px rgba(168, 85, 247, 0.1);
+  transition: all 0.3s ease-in-out;
 }
 
-.social-box .item svg {
-  width: 1.5rem;  /* 24px */
-  height: 1.5rem; /* 24px */
-  transition: transform 0.4s ease-in-out;
+.social-item svg {
+  width: 1.8rem;  /* 28px */
+  height: 1.8rem; /* 28px */
+  transition: all 0.3s ease-in-out;
+  filter: drop-shadow(0 0 8px rgba(168, 85, 247, 0.5));
 }
 
-.social-box .item:hover {
-  color: #06b6d4; /* Cyan-500 from the gradient */
-  --fill-color: 100%;
-  box-shadow: 0 0 1.5rem rgba(0, 0, 0, 0.7);
+.social-item:hover {
+  color: #06b6d4;
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.2) 0%, rgba(6, 182, 212, 0.2) 100%);
+  border-color: rgba(6, 182, 212, 0.6);
+  box-shadow: 
+    0 0 30px rgba(6, 182, 212, 0.4),
+    inset 0 0 30px rgba(6, 182, 212, 0.2);
 }
 
-.social-box .item:hover svg {
-  transform: scale(1.2);
-}
-
-/* The animated gradient border effect */
-.social-box .item::after {
-  position: absolute;
-  z-index: -1;
-  content: "";
-  inset: -3px;
-  border-radius: inherit;
-
-  /* Use a static gradient and animate a mask to reveal it */
-  background: linear-gradient(to bottom right, #8b5cf6, #06b6d4, #ec4899); /* purple-500, cyan-500, pink-500 */
-  mask: conic-gradient(black var(--fill-color), transparent var(--fill-color));
-  -webkit-mask: conic-gradient(black var(--fill-color), transparent var(--fill-color));
+.social-item:hover svg {
+  transform: scale(1.1);
   
-  transition: --fill-color 0.4s ease-in-out;
+}
+
+/* Neon glow for title */
+.neon-glow {
+  text-shadow:
+    0 0 8px #a78bfa,
+    0 0 16px #a78bfa99,
+    0 0 32px #67e8f966;
 }
 </style>

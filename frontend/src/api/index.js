@@ -1,8 +1,8 @@
 const API_BASE_URL =
     import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
-// Timeout ayarları
-const TIMEOUT_MS = 10000; // 10 saniye
+// Timeout ayarları - Cache warming ile optimize edildi
+const TIMEOUT_MS = 15000; // 15 saniye
 
 // Fetch wrapper with timeout
 const fetchWithTimeout = async(url, options = {}) => {

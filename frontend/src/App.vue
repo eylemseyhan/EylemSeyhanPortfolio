@@ -23,16 +23,15 @@ const navOpen = ref(false)
 
       <!-- Nav items -->
       <ul class="hidden md:flex gap-10 items-center">
-  <li>
-    <router-link to="/" class="nav-modern group" exact-active-class="active-link">ana sayfa</router-link>
-  </li>
-  <li>
-    <router-link to="/projects" class="nav-modern group" exact-active-class="active-link">projeler</router-link>
-  </li>
-  <li>
-    <router-link to="/contact" class="nav-modern group" exact-active-class="active-link">iletişim</router-link>
-  </li>
-        
+        <li>
+          <router-link to="/" class="nav-modern group" exact-active-class="active-link">ana sayfa</router-link>
+        </li>
+        <li>
+          <router-link to="/projects" class="nav-modern group" exact-active-class="active-link">projeler</router-link>
+        </li>
+        <li>
+          <router-link to="/contact" class="nav-modern group" exact-active-class="active-link">iletişim</router-link>
+        </li>
       </ul>
 
       <!-- Mobile -->
@@ -45,6 +44,21 @@ const navOpen = ref(false)
         </svg>
       </button>
     </nav>
+
+    <!-- Mobile Menu -->
+    <div v-if="navOpen" class="md:hidden fixed top-16 left-0 w-full bg-gray-900/95 backdrop-blur shadow-lg z-40 transition-all duration-300">
+      <ul class="flex flex-col items-center py-6 space-y-4">
+        <li>
+          <router-link to="/" class="nav-modern-mobile" exact-active-class="active-link" @click="navOpen = false">ana sayfa</router-link>
+        </li>
+        <li>
+          <router-link to="/projects" class="nav-modern-mobile" exact-active-class="active-link" @click="navOpen = false">projeler</router-link>
+        </li>
+        <li>
+          <router-link to="/contact" class="nav-modern-mobile" exact-active-class="active-link" @click="navOpen = false">iletişim</router-link>
+        </li>
+      </ul>
+    </div>
 
     <Transition
       name="page"
@@ -114,5 +128,22 @@ const navOpen = ref(false)
 .nav-modern:hover::after,
 .nav-modern.active-link::after {
   transform: scaleX(1);
+}
+
+.nav-modern-mobile {
+  @apply relative text-lg font-sans font-semibold tracking-wider lowercase px-4 py-2 transition-all duration-300;
+  background: linear-gradient(90deg, #67e8f9, #a78bfa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 6px #a78bfa66);
+  cursor: pointer;
+}
+
+.nav-modern-mobile:hover,
+.nav-modern-mobile.active-link {
+  filter: drop-shadow(0 0 12px #a78bfa99);
+  background: linear-gradient(90deg, #5eead4, #a78bfa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 </style>
