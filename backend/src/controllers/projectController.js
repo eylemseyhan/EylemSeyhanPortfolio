@@ -28,7 +28,7 @@ const getProjects = async(req, res) => {
         }));
 
         if (redisClient) {
-            await redisClient.setEx(cacheKey, 300, JSON.stringify(projects)); // 5 min cache
+            await redisClient.setEx(cacheKey, 1800, JSON.stringify(projects)); // 30 min cache
         }
 
         console.log(`Projects loaded: ${projects.length} projects`);
