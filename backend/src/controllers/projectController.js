@@ -15,7 +15,7 @@ const getProjects = async(req, res) => {
 
         const projectsSnapshot = await db.collection('projects')
             .orderBy('order', 'asc')
-            .select('title', 'description', 'coverImageUrl', 'technologies', 'githubUrl', 'liveUrl', 'order')
+            .select('title', 'description', 'coverImageUrl', 'coverImageUrl2', 'technologies', 'githubUrl', 'liveUrl', 'order')
             .get();
 
         if (projectsSnapshot.empty) {
