@@ -1,5 +1,29 @@
 <template>
   <div class="w-full max-w-4xl mx-auto mt-16 relative">
+    <!-- Sol Ok -->
+    <button
+      class="slider-arrow left-0"
+      @click="goPrev"
+      aria-label="Önceki"
+    >
+      <span class="arrow-bg">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M14 6L8 12L14 18" stroke="#a5f3fc" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </span>
+    </button>
+    <!-- Sağ Ok -->
+    <button
+      class="slider-arrow right-0"
+      @click="goNext"
+      aria-label="Sonraki"
+    >
+      <span class="arrow-bg">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M10 6L16 12L10 18" stroke="#a5f3fc" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </span>
+    </button>
     <swiper
       ref="swiperRef"
       :modules="[Navigation, Pagination]"
@@ -53,6 +77,12 @@ const swiperRef = ref(null)
 
 const sliderProjects = computed(() => allProjects.value.slice(0, 5))
 
+function goPrev() {
+  swiperRef.value?.swiper?.slidePrev()
+}
+function goNext() {
+  swiperRef.value?.swiper?.slideNext()
+}
 
 if (error.value) {
   console.error('Slider için projeler yüklenemedi:', error.value)
@@ -75,4 +105,37 @@ if (error.value) {
 :root {
   --swiper-navigation-size: 44px;
 }
+
+.slider-arrow {
+  @apply absolute top-1/2 -translate-y-1/2 z-20 flex items-center justify-center;
+  /* Oklar mobilde gizlenebilir */
+  @apply hidden md:flex;
+}
+
+.arrow-bg {
+  @apply flex items-center justify-center w-12 h-12 rounded-full transition-all duration-200;
+  background: linear-gradient(135deg, #23244d 0%, #2d1e3a 100%);
+  box-shadow: 0 2px 16px 0 #67e8f955, 0 0 0 0 #a78bfa00;
+  border: 1.5px solid rgba(167, 139, 250, 0.18);
+  backdrop-filter: blur(6px);
+  opacity: 0.92;
+  /* Hafif cam efekti */
+}
+
+.slider-arrow svg {
+  @apply transition-transform duration-200;
+  filter: drop-shadow(0 0 4px #a5f3fc88);
+}
+
+.slider-arrow:hover .arrow-bg {
+  @apply scale-110;
+  background: linear-gradient(135deg, #a5f3fc 0%, #a78bfa 100%);
+  box-shadow: 0 0 32px 8px #a5f3fc66, 0 0 0 0 #a78bfa00;
+  border-color: #a5f3fc;
+  opacity: 1;
+  filter: blur(1.5px) brightness(1.15);
+}
+
+.slider-arrow.left-0 { left: -2.5rem; }
+.slider-arrow.right-0 { right: -2.5rem; }
 </style> 

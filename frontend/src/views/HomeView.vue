@@ -3,6 +3,8 @@
     class="relative min-h-screen flex flex-col items-center justify-center font-sans text-white overflow-hidden px-4 sm:px-6 lg:px-8"
     aria-label="Ana Sayfa İçeriği"
   >
+
+ 
   
     
     <!-- Hero bölümü ve buton slotu -->

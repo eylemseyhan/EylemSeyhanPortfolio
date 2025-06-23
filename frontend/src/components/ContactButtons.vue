@@ -4,7 +4,7 @@
     class="flex justify-center font-sans py-10"
   >
     <a
-      href="/Eylem-Seyhan-CV.pdf"
+      href="/cv/Eylem-Seyhan-Resume.pdf"
       download="Eylem-Seyhan-CV"
       class="cv-button group"
       aria-label="CV'mi İndir"

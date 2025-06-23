@@ -9,6 +9,7 @@ module.exports = {
             fontFamily: {
                 sans: ['Lexend', 'ui-sans-serif', 'system-ui'],
                 mono: ['Fira Code', 'monospace'],
+                sans: ['Sora', 'Lexend', 'Arial', 'sans-serif'],
             },
             colors: {
                 primary: '#c026d3',

@@ -12,12 +12,14 @@
     "dependencies": {
         "@headlessui/vue": "^1.7.19",
         "@heroicons/vue": "^2.1.1",
+        "@tresjs/cientos": "^4.3.1",
+        "@tresjs/core": "^4.3.6",
         "@vueuse/core": "^10.9.0",
         "@vueuse/motion": "^2.0.0",
         "firebase": "^10.10.0",
         "gsap": "^3.12.5",
         "swiper": "^11.0.6",
-        "three": "^0.177.0",
+        "three": "^0.152.2",
         "vue": "^3.4.21",
         "vue-router": "^4.3.0"
     },

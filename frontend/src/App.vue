@@ -4,6 +4,7 @@ import { useDark, useToggle } from '@vueuse/core'
 import { SunIcon, MoonIcon } from '@heroicons/vue/24/outline'
 import { defineAsyncComponent, Suspense } from 'vue'
 import Hero from './components/Hero.vue'
+import Cursor from './components/Cursor.vue'
 // Koyu mod
 const isDark = useDark()
 const toggleDarkMode = useToggle(isDark)
@@ -12,6 +13,7 @@ const navOpen = ref(false)
 </script>
 
 <template>
+  <Cursor />
   <div class="min-h-screen bg-background text-white font-sans flex flex-col">
     <!-- Navbar -->
     <nav class="fixed top-0 left-0 w-full flex justify-between items-center px-4 sm:px-6 lg:px-8 py-3 sm:py-4
@@ -20,16 +22,17 @@ const navOpen = ref(false)
       <router-link to="/" class="text-lg sm:text-xl font-bold text-accent"></router-link>
 
       <!-- Nav items -->
-      <ul class="hidden md:flex gap-6 items-center">
-        <li><router-link to="/" active-class="text-cyan-400">Ana Sayfa</router-link></li>
-        <li><router-link to="/projects" active-class="text-teal-400">Projeler</router-link></li>
-        <li><router-link to="/contact" active-class="text-teal-400">İletişim</router-link></li>
-        <li>
-          <button @click="toggleDarkMode" class="p-2">
-            <SunIcon v-if="isDark" class="w-5 h-5 text-yellow-400" />
-            <MoonIcon v-else class="w-5 h-5 text-teal-400" />
-          </button>
-        </li>
+      <ul class="hidden md:flex gap-10 items-center">
+  <li>
+    <router-link to="/" class="nav-modern group" exact-active-class="active-link">ana sayfa</router-link>
+  </li>
+  <li>
+    <router-link to="/projects" class="nav-modern group" exact-active-class="active-link">projeler</router-link>
+  </li>
+  <li>
+    <router-link to="/contact" class="nav-modern group" exact-active-class="active-link">iletişim</router-link>
+  </li>
+        
       </ul>
 
       <!-- Mobile -->
@@ -43,7 +46,15 @@ const navOpen = ref(false)
       </button>
     </nav>
 
-    <router-view />
+    <Transition
+      name="page"
+      mode="out-in"
+      appear
+    >
+      <router-view v-slot="{ Component }">
+        <component :is="Component" />
+      </router-view>
+    </Transition>
 
     <!-- Footer -->
     <footer class="w-full text-xs text-gray-500 text-center py-4 border-t border-gray-800 bg-gray-900">
@@ -53,12 +64,55 @@ const navOpen = ref(false)
 </template>
 
 <style>
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.3s ease;
+.page-enter-active, .page-leave-active {
+  transition: opacity 0.4s cubic-bezier(.4,0,.2,1), transform 0.4s cubic-bezier(.4,0,.2,1);
 }
-.fade-enter-from,
-.fade-leave-to {
+.page-enter-from, .page-leave-to {
   opacity: 0;
+  transform: translateY(20px);
+}
+.page-enter-to, .page-leave-from {
+  opacity: 1;
+  transform: translateY(0);
+}
+.nav-modern {
+  @apply relative text-lg font-sans font-semibold tracking-wider lowercase px-2 py-1 transition-all duration-300;
+  background: linear-gradient(90deg, #67e8f9, #a78bfa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 6px #a78bfa66);
+  cursor: pointer;
+}
+
+.nav-modern .active-link,
+.nav-modern:focus,
+.nav-modern:hover {
+  filter: drop-shadow(0 0 12px #a78bfa99);
+}
+
+.nav-modern .active-link {
+  /* Aktif linkte gradient daha belirgin olabilir */
+  background: linear-gradient(90deg, #5eead4, #a78bfa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.nav-modern::after {
+  content: '';
+  display: block;
+  position: absolute;
+  left: 0; bottom: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, #67e8f9, #a78bfa);
+  transform: scaleX(0);
+  transition: transform 0.3s cubic-bezier(.4,0,.2,1);
+  transform-origin: left;
+  border-radius: 2px;
+}
+
+.nav-modern:hover::after,
+.nav-modern.active-link::after {
+  transform: scaleX(1);
 }
 </style>

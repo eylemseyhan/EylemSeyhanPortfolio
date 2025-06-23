@@ -12,7 +12,9 @@
 }
 
 /* Add other @font-face rules as needed */
-
+html, body {
+  cursor: none !important;
+}
 html {
   scroll-behavior: smooth;
 }
