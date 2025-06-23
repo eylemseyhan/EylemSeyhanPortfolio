@@ -37,6 +37,7 @@
   .eylem {
     font-size: 170px; /* Masaüstü için büyük boyut */
   }
+
 }
 
 @media (max-width: 1023px) {
@@ -45,3 +46,4 @@
   }
 }
 </style>
+

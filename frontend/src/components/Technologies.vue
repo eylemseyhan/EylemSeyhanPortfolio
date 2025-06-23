@@ -1,52 +1,32 @@
 <template>
-  <section
-    id="technologies"
-    class="w-full max-w-5xl mx-auto mt-8 py-8 px-4"
-    aria-labelledby="tech-title"
-  >
-    <!-- Title -->
-    <h2
-      id="tech-title"
-      class="text-4xl sm:text-5xl font-extrabold text-center mb-8 font-sans tracking-wide text-white drop-shadow-[0_0_16px_#a78bfa] neon-glow cursor-hover transition-all duration-700 ease-out hover:scale-110 hover:skew-x-3 hover:translate-y-[-8px] hover:drop-shadow-[0_0_32px_#a78bfa] hover:tracking-wider"
-    >
-      Kullandığım Teknolojiler
-    </h2>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+  <section id="technologies" class="technologies-container" aria-labelledby="tech-title">
+    <h2 id="tech-title" class="technologies-title cursor-hover">Kullandığım Teknolojiler</h2>
+    <div class="technologies-grid">
       <!-- Frontend Block -->
-      <div class="flex flex-col items-center bg-gradient-to-br from-[#23244d]/70 to-[#2d1e3a]/80 rounded-3xl shadow-2xl p-6 backdrop-blur-md border border-white/10">
-        <h3 class="text-2xl font-bold mb-6 text-white drop-shadow-[0_0_12px_#a78bfa] cursor-hover transition-all duration-600 ease-out hover:scale-105 hover:skew-x-2 hover:translate-y-[-4px] hover:drop-shadow-[0_0_20px_#06b6d4]">Frontend</h3>
-        <ul class="flex flex-wrap justify-center gap-4 w-full">
-          <li
-            v-for="tech in frontendTech"
-            :key="tech.name"
-            class="group relative w-28 h-32 bg-white/5 rounded-2xl flex flex-col items-center justify-center shadow-lg border border-white/10 transition-all duration-300 hover:scale-105 hover:shadow-[0_0_32px_8px_#67e8f9cc] hover:border-purple-400/60 hover:bg-cyan-400/10 motion-safe:animate-fadeIn"
-          >
+      <div class="tech-block frontend-block">
+        <h3 class="tech-block-title cursor-hover">Frontend</h3>
+        <ul class="tech-list">
+          <li v-for="tech in frontendTech" :key="tech.name" class="tech-card group">
             <component
               :is="tech.icon"
-              :class="['w-12 h-12 mb-2 drop-shadow-[0_0_12px_#a78bfa]', tech.color, 'transition-all duration-300 group-hover:drop-shadow-[0_0_24px_#67e8f9]']"
+              :class="['tech-icon', tech.color]"
               aria-hidden="true"
             />
-            <span class="text-white text-center text-sm font-semibold font-sans tracking-wide group-hover:text-cyan-200 transition-colors duration-300">{{ tech.name }}</span>
+            <span class="tech-name">{{ tech.name }}</span>
           </li>
         </ul>
       </div>
-
       <!-- Backend Block -->
-      <div class="flex flex-col items-center bg-gradient-to-br from-[#23244d]/70 to-[#2d1e3a]/80 rounded-3xl shadow-2xl p-6 backdrop-blur-md border border-white/10">
-        <h3 class="text-2xl font-bold mb-6 text-white drop-shadow-[0_0_12px_#a78bfa] cursor-hover transition-all duration-600 ease-out hover:scale-105 hover:skew-x-2 hover:translate-y-[-4px] hover:drop-shadow-[0_0_20px_#a78bfa]">Backend</h3>
-        <ul class="flex flex-wrap justify-center gap-4 w-full">
-          <li
-            v-for="tech in backendTech"
-            :key="tech.name"
-            class="group relative w-28 h-32 bg-white/5 rounded-2xl flex flex-col items-center justify-center shadow-lg border border-white/10 transition-all duration-300 hover:scale-105 hover:shadow-[0_0_32px_8px_#a78bfa99] hover:border-purple-400/60 hover:bg-purple-400/10 motion-safe:animate-fadeIn"
-          >
+      <div class="tech-block backend-block">
+        <h3 class="tech-block-title cursor-hover">Backend</h3>
+        <ul class="tech-list">
+          <li v-for="tech in backendTech" :key="tech.name" class="tech-card group">
             <component
               :is="tech.icon"
-              :class="['w-12 h-12 mb-2 drop-shadow-[0_0_12px_#a78bfa]', tech.color, 'transition-all duration-300 group-hover:drop-shadow-[0_0_24px_#a78bfa]']"
+              :class="['tech-icon', tech.color]"
               aria-hidden="true"
             />
-            <span class="text-white text-center text-sm font-semibold font-sans tracking-wide group-hover:text-purple-200 transition-colors duration-300">{{ tech.name }}</span>
+            <span class="tech-name">{{ tech.name }}</span>
           </li>
         </ul>
       </div>
@@ -79,42 +59,129 @@ const backendTech = [
 ]
 </script>
 
-<style>
-/* Neon glow for title */
-.neon-glow {
+<style scoped>
+.technologies-container {
+  width: 100%;
+  max-width: 64rem;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+.technologies-title {
+  font-size: 2.25rem;
+  font-weight: 800;
+  text-align: center;
+  margin-bottom: 2rem;
+  font-family: 'Lexend', Arial, sans-serif;
+  letter-spacing: 0.04em;
+  color: #fff;
   text-shadow:
     0 0 8px #a78bfa,
     0 0 16px #a78bfa99,
     0 0 32px #67e8f966;
+  transition: all 0.7s cubic-bezier(.4,0,.2,1);
 }
-
+@media (min-width: 640px) {
+  .technologies-title { font-size: 3rem; }
+}
+@media (min-width: 1024px) {
+  .technologies-title { font-size: 3.75rem; }
+}
+.technologies-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+@media (min-width: 768px) {
+  .technologies-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+.tech-block {
+  background: linear-gradient(135deg, #23244dB3 0%, #2d1e3acc 100%);
+  border-radius: 1.5rem;
+  box-shadow: 0 8px 32px 0 #a78bfa33;
+  padding: 2rem 1.5rem;
+  border: 1.5px solid rgba(255,255,255,0.08);
+  backdrop-filter: blur(8px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.tech-block-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: #fff;
+  text-shadow: 0 0 12px #a78bfa;
+  transition: all 0.6s cubic-bezier(.4,0,.2,1);
+}
+.tech-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  width: 100%;
+}
+.tech-card {
+  width: 7rem;
+  height: 8rem;
+  background: rgba(255,255,255,0.05);
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 16px 0 #a78bfa22;
+  border: 1px solid rgba(255,255,255,0.08);
+  transition: all 0.3s cubic-bezier(.4,0,.2,1);
+  cursor: pointer;
+}
+.tech-card:hover {
+  transform: scale(1.08) rotate(2deg);
+  box-shadow: 0 0 32px 8px #67e8f9cc;
+  border-color: #a78bfa;
+  background: rgba(103,232,249,0.08);
+}
+.tech-icon {
+  width: 3rem;
+  height: 3rem;
+  margin-bottom: 0.5rem;
+  filter: drop-shadow(0 0 12px #a78bfa);
+  transition: all 0.3s cubic-bezier(.4,0,.2,1);
+}
+.group:hover .tech-icon {
+  filter: drop-shadow(0 0 24px #67e8f9);
+  transform: scale(1.12);
+}
+.tech-name {
+  color: #fff;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: 'Lexend', Arial, sans-serif;
+  letter-spacing: 0.03em;
+  transition: color 0.3s cubic-bezier(.4,0,.2,1);
+}
+.group:hover .tech-name {
+  color: #67e8f9;
+}
 /* Modern sinematik hover efektleri */
 .cursor-hover {
   transform-style: preserve-3d;
   perspective: 1000px;
 }
-
 .cursor-hover:hover {
   animation: glow-pulse 2s ease-in-out infinite;
+  scale: 1.08;
+  skew: 2deg;
+  letter-spacing: 0.04em;
 }
-
 @keyframes glow-pulse {
   0%, 100% {
     filter: drop-shadow(0 0 16px #a78bfa);
   }
   50% {
     filter: drop-shadow(0 0 24px #a78bfa) drop-shadow(0 0 32px #a78bfa);
-  }
-}
-
-/* Fade-in animation (optional, motion-safe) */
-@media (prefers-reduced-motion: no-preference) {
-  .animate-fadeIn {
-    animation: fadeIn 1.1s cubic-bezier(.4,0,.2,1) both;
-  }
-  @keyframes fadeIn {
-    0% { opacity: 0; transform: scale(0.95);}
-    100% { opacity: 1; transform: scale(1);}
   }
 }
 </style>

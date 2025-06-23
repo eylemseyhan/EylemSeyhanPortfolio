@@ -1,54 +1,135 @@
 <template>
-  <div class="w-full max-w-4xl mx-auto px-4">
-    <h2 class="text-4xl sm:text-5xl font-extrabold text-center mb-8 font-sans tracking-wide text-white drop-shadow-[0_0_16px_#a78bfa] neon-glow cursor-hover transition-all duration-700 ease-out hover:scale-110 hover:skew-x-3 hover:translate-y-[-8px] hover:drop-shadow-[0_0_32px_#a78bfa] hover:tracking-wider">Deneyimlerim</h2>
-
-    <div class="relative border-l border-white/20 pl-8 space-y-12">
-      
-      <div class="relative opacity-0 translate-y-10 transition-all duration-700 delay-100 animate-fade-in">
-        <div class="absolute left-0 top-2 w-4 h-4 bg-gradient-to-br from-cyan-400 to-purple-500 rounded-full shadow-lg transform -translate-x-2"></div>
-        <div class="ml-4">
-          <p class="text-xl sm:text-2xl text-cyan-300 font-semibold">2025</p>
-          <h3 class="text-3xl sm:text-4xl font-bold text-white cursor-hover transition-all duration-600 ease-out hover:scale-105 hover:skew-x-2 hover:translate-x-3 hover:drop-shadow-[0_0_20px_#06b6d4]">DDI Teknoloji – Part-time Developer</h3>
+  <div class="aboutme-container">
+    <h2 class="aboutme-title cursor-hover">Deneyimlerim</h2>
+    <div class="aboutme-timeline">
+      <div class="aboutme-timeline-item animate-fade-in delay-100">
+        <div class="timeline-dot dot-cyan-purple"></div>
+        <div class="timeline-card">
+          <p class="timeline-year">2025</p>
+          <h3 class="timeline-job cursor-hover">DDI Teknoloji – Part-time Developer</h3>
         </div>
       </div>
-
-      <div class="relative opacity-0 translate-y-10 transition-all duration-700 delay-200 animate-fade-in">
-        <div class="absolute left-0 top-2 w-4 h-4 bg-gradient-to-br from-pink-400 to-purple-500 rounded-full shadow-lg transform -translate-x-2"></div>
-        <div class="ml-4">
-          <p class="text-xl sm:text-2xl text-cyan-300 font-semibold">2024</p>
-          <h3 class="text-3xl sm:text-4xl font-bold text-white cursor-hover transition-all duration-600 ease-out hover:scale-105 hover:skew-x-2 hover:translate-x-3 hover:drop-shadow-[0_0_20px_#06b6d4]">Abdi İbrahim – AI Intern</h3>
+      <div class="aboutme-timeline-item animate-fade-in delay-200">
+        <div class="timeline-dot dot-pink-purple"></div>
+        <div class="timeline-card">
+          <p class="timeline-year">2024</p>
+          <h3 class="timeline-job cursor-hover">Abdi İbrahim – AI Intern</h3>
         </div>
       </div>
-
-      <div class="relative opacity-0 translate-y-10 transition-all duration-700 delay-300 animate-fade-in">
-        <div class="absolute left-0 top-2 w-4 h-4 bg-gradient-to-br from-purple-300 to-blue-500 rounded-full shadow-lg transform -translate-x-2"></div>
-        <div class="ml-4">
-          <p class="text-xl sm:text-2xl text-cyan-300 font-semibold">2024</p>
-          <h3 class="text-3xl sm:text-4xl font-bold text-white cursor-hover transition-all duration-600 ease-out hover:scale-105 hover:skew-x-2 hover:translate-x-3 hover:drop-shadow-[0_0_20px_#06b6d4]">Enerjisa Üretim – Intern</h3>
+      <div class="aboutme-timeline-item animate-fade-in delay-300">
+        <div class="timeline-dot dot-purple-blue"></div>
+        <div class="timeline-card">
+          <p class="timeline-year">2024</p>
+          <h3 class="timeline-job cursor-hover">Enerjisa Üretim – Intern</h3>
         </div>
       </div>
-
-      <div class="relative opacity-0 translate-y-10 transition-all duration-700 delay-400 animate-fade-in">
-        <div class="absolute left-0 top-2 w-4 h-4 bg-gradient-to-br from-cyan-300 to-blue-400 rounded-full shadow-lg transform -translate-x-2"></div>
-        <div class="ml-4">
-          <p class="text-xl sm:text-2xl text-cyan-300 font-semibold">2024</p>
-          <h3 class="text-3xl sm:text-4xl font-bold text-white cursor-hover transition-all duration-600 ease-out hover:scale-105 hover:skew-x-2 hover:translate-x-3 hover:drop-shadow-[0_0_20px_#06b6d4]">Devlet Su İşleri – Intern</h3>
+      <div class="aboutme-timeline-item animate-fade-in delay-400">
+        <div class="timeline-dot dot-cyan-blue"></div>
+        <div class="timeline-card">
+          <p class="timeline-year">2024</p>
+          <h3 class="timeline-job cursor-hover">Devlet Su İşleri – Intern</h3>
         </div>
       </div>
-
-      <div class="relative opacity-0 translate-y-10 transition-all duration-700 delay-500 animate-fade-in">
-        <div class="absolute left-0 top-2 w-4 h-4 bg-gradient-to-br from-indigo-400 to-cyan-400 rounded-full shadow-lg transform -translate-x-2"></div>
-        <div class="ml-4">
-          <p class="text-xl sm:text-2xl text-cyan-300 font-semibold">2021</p>
-          <h3 class="text-3xl sm:text-4xl font-bold text-white cursor-hover transition-all duration-600 ease-out hover:scale-105 hover:skew-x-2 hover:translate-x-3 hover:drop-shadow-[0_0_20px_#06b6d4]">DenizBank – Denizaşırı Online Intern</h3>
+      <div class="aboutme-timeline-item animate-fade-in delay-500">
+        <div class="timeline-dot dot-indigo-cyan"></div>
+        <div class="timeline-card">
+          <p class="timeline-year">2021</p>
+          <h3 class="timeline-job cursor-hover">DenizBank – Denizaşırı Online Intern</h3>
         </div>
       </div>
-
     </div>
   </div>
 </template>
 
 <style scoped>
+.aboutme-container {
+  width: 100%;
+  max-width: 48rem;
+  margin: 0 auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+.aboutme-title {
+  font-size: 2.25rem;
+  font-weight: 800;
+  text-align: center;
+  margin-bottom: 2rem;
+  font-family: 'Lexend', Arial, sans-serif;
+  letter-spacing: 0.04em;
+  color: #fff;
+  text-shadow:
+    0 0 8px #a78bfa,
+    0 0 16px #a78bfa99,
+    0 0 32px #67e8f966;
+  transition: all 0.7s cubic-bezier(.4,0,.2,1);
+}
+@media (min-width: 640px) {
+  .aboutme-title {
+    font-size: 3rem;
+  }
+}
+@media (min-width: 1024px) {
+  .aboutme-title {
+    font-size: 3.75rem;
+  }
+}
+.aboutme-timeline {
+  position: relative;
+  border-left: 1.5px solid rgba(255,255,255,0.18);
+  padding-left: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+.aboutme-timeline-item {
+  position: relative;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.7s cubic-bezier(.4,0,.2,1);
+  display: flex;
+  align-items: flex-start;
+}
+.timeline-dot {
+  position: absolute;
+  left: -1.25rem;
+  top: 0.5rem;
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: 50%;
+  box-shadow: 0 0 16px 4px rgba(167,139,250,0.4);
+}
+.dot-cyan-purple {
+  background: linear-gradient(135deg, #06b6d4, #a78bfa);
+}
+.dot-pink-purple {
+  background: linear-gradient(135deg, #ec4899, #a78bfa);
+}
+.dot-purple-blue {
+  background: linear-gradient(135deg, #a78bfa, #38bdf8);
+}
+.dot-cyan-blue {
+  background: linear-gradient(135deg, #67e8f9, #38bdf8);
+}
+.dot-indigo-cyan {
+  background: linear-gradient(135deg, #818cf8, #67e8f9);
+}
+.timeline-card {
+  margin-left: 1.5rem;
+}
+.timeline-year {
+  font-size: 1.25rem;
+  color: #67e8f9;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+.timeline-job {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #fff;
+  transition: all 0.6s cubic-bezier(.4,0,.2,1);
+}
+
+/* Animasyonlar */
 @keyframes fade-in {
   to {
     opacity: 1;
@@ -58,17 +139,23 @@
 .animate-fade-in {
   animation: fade-in 0.8s ease forwards;
 }
+.delay-100 { animation-delay: 0.1s; }
+.delay-200 { animation-delay: 0.2s; }
+.delay-300 { animation-delay: 0.3s; }
+.delay-400 { animation-delay: 0.4s; }
+.delay-500 { animation-delay: 0.5s; }
 
 /* Modern sinematik hover efektleri */
 .cursor-hover {
   transform-style: preserve-3d;
   perspective: 1000px;
 }
-
 .cursor-hover:hover {
   animation: glow-pulse 2s ease-in-out infinite;
+  scale: 1.08;
+  skew: 2deg;
+  letter-spacing: 0.04em;
 }
-
 @keyframes glow-pulse {
   0%, 100% {
     filter: drop-shadow(0 0 16px #a78bfa);
@@ -76,12 +163,5 @@
   50% {
     filter: drop-shadow(0 0 24px #a78bfa) drop-shadow(0 0 32px #a78bfa);
   }
-}
-
-h2 {
-  text-shadow:
-    0 0 8px #a78bfa,
-    0 0 16px #a78bfa99,
-    0 0 32px #67e8f966;
 }
 </style>
