@@ -1,0 +1,54 @@
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@100;200;300;400;500&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'Davetica';
+  src: url('/fonts/Davetica-Regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Add other @font-face rules as needed */
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #1f1f47;
+  color: whitesmoke;
+  min-height: 100vh;
+  text-rendering: optimizeSpeed;
+  line-height: 1.5;
+  overflow-x: hidden;
+  font-family: 'Lexend', Arial, sans-serif;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul {
+  list-style: none;
+}
+
+img, picture {
+  max-width: 100%;
+  display: block;
+}
+
+input, button, textarea, select {
+  font: inherit;
+  }
+
+button {
+  appearance: none;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
