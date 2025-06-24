@@ -1,9 +1,9 @@
 <template>
   <main class="min-h-screen py-12 px-4 sm:px-6 lg:px-8  relative overflow-x-hidden">
-    <div v-if="loading" class="text-center text-cyan-300 animate-pulse mt-32 text-xl font-mono">
+    <div v-if="loading" class="text-center text-cyan-300 animate-pulse mt-32 text-xl font-semibold">
       <p>Proje yükleniyor...</p>
     </div>
-    <div v-else-if="error" class="text-center text-pink-400 mt-32 text-lg font-mono">
+    <div v-else-if="error" class="text-center text-pink-400 mt-32 text-lg font-semibold">
       <p>Proje yüklenirken bir hata oluştu: {{ error }}</p>
     </div>
     <article
@@ -67,7 +67,7 @@
             class="rounded-xl overflow-hidden border-2 border-cyan-400/30 neon-img transition-transform duration-300 hover:scale-105 hover:shadow-cyan-400/40 hover:shadow-2xl"
           >
             <img :src="image.url" :alt="image.caption || project.title" class="w-full h-auto object-cover" />
-            <p v-if="image.caption" class="p-2 text-sm text-center text-cyan-300 font-mono">{{ image.caption }}</p>
+            <p v-if="image.caption" class="p-2 text-sm text-center text-cyan-300 font-semibold">{{ image.caption }}</p>
           </div>
         </div>
       </section>
@@ -101,7 +101,7 @@ onMounted(loadProject)
 
 /* Neon Chip */
 .tech-chip-neon {
-  @apply px-3 py-1 rounded-full text-xs font-semibold font-mono;
+  @apply px-3 py-1 rounded-full text-xs font-semibold;
   background: linear-gradient(135deg, #23244d 0%, #2d1e3a 100%);
   color: #a5f3fc;
   border: 1.5px solid #a5f3fc88;
