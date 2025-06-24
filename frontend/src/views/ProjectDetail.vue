@@ -1,5 +1,5 @@
 <template>
-  <main class="min-h-screen py-12 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-[#18122B] via-[#23244d] to-[#2d1e3a] relative overflow-x-hidden">
+  <main class="min-h-screen py-12 px-4 sm:px-6 lg:px-8  relative overflow-x-hidden">
     <div v-if="loading" class="text-center text-cyan-300 animate-pulse mt-32 text-xl font-mono">
       <p>Proje yükleniyor...</p>
     </div>
@@ -8,7 +8,7 @@
     </div>
     <article
       v-else-if="project"
-      class="max-w-4xl mx-auto bg-gradient-to-br from-[#23244d]/80 to-[#2d1e3a]/80 rounded-3xl shadow-2xl border border-cyan-400/20 p-8 backdrop-blur-md neon-fade-in"
+      class="max-w-4xl mx-auto rounded-3xl shadow-2xl border border-cyan-400/20 p-8 backdrop-blur-md neon-fade-in"
     >
       <!-- Header -->
       <header class="mb-10 text-center">
@@ -64,10 +64,10 @@
           <div
             v-for="(image, index) in project.images"
             :key="index"
-            class="rounded-xl overflow-hidden border-2 border-cyan-400/30 neon-img transition-transform duration-300 hover:scale-105 hover:shadow-cyan-400/40 hover:shadow-2xl bg-[#18122B]/60"
+            class="rounded-xl overflow-hidden border-2 border-cyan-400/30 neon-img transition-transform duration-300 hover:scale-105 hover:shadow-cyan-400/40 hover:shadow-2xl"
           >
             <img :src="image.url" :alt="image.caption || project.title" class="w-full h-auto object-cover" />
-            <p v-if="image.caption" class="p-2 text-sm text-center text-cyan-300 bg-[#23244d]/60 font-mono">{{ image.caption }}</p>
+            <p v-if="image.caption" class="p-2 text-sm text-center text-cyan-300 font-mono">{{ image.caption }}</p>
           </div>
         </div>
       </section>
