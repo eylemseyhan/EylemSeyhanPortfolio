@@ -64,16 +64,15 @@
           <div
             v-for="(image, index) in project.images"
             :key="index"
-            class="relative rounded-xl overflow-hidden border-2 border-cyan-400/30 neon-img transition-transform duration-300 hover:scale-105 hover:shadow-cyan-400/40 hover:shadow-2xl bg-[#18122B]/60 cursor-zoom-in"
+            class="relative rounded-xl overflow-hidden border-2 border-cyan-400/30 neon-img transition-transform duration-300 bg-[#18122B]/60 group"
             @click="openModal(image)"
           >
-            <img :src="image.url" :alt="image.caption || project.title" class="w-full h-auto object-cover" />
-            <!-- Büyüteç ikonu -->
-            <span class="absolute top-2 right-2 bg-black/50 rounded-full p-1 pointer-events-none">
-              <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-cyan-200 opacity-80" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1116.65 16.65z" />
-              </svg>
-            </span>
+            <img
+              :src="image.url"
+              :alt="image.caption || project.title"
+              class="w-full h-auto object-cover transition-transform duration-300 transition-opacity group-hover:scale-110 group-hover:opacity-80"
+              style="cursor: pointer;"
+            />
             <p v-if="image.caption" class="p-2 text-sm text-center text-cyan-300 bg-[#23244d]/60 font-mono">{{ image.caption }}</p>
           </div>
         </div>
