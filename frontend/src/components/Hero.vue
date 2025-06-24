@@ -1,7 +1,8 @@
 <template>
   <section class="w-full min-h-[60vh] flex flex-col justify-center items-center text-center px-4 pt-24">
     <h1 class="eylem text-5xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-thin">Hoş geldin, ben Eylem.</h1>
-    <p class="text-lg font-light">Fullstack geliştiricisiyim. Modern, performanslı ve kullanıcı dostu arayüzler geliştiriyorum.</p>
+    <p class="text-lg font-light">Trakya Üniversitesi Bilgisayar Mühendisliği mezunuyum. </p>
+    <p class="text-lg font-light">React, Vue, .NET ve Firebase gibi teknolojilerle fullstack web uygulamaları geliştiriyorum.</p>
     <slot name="buttons" />
   </section>
 </template>
@@ -20,7 +21,6 @@
   text-align: center;
   font-family: 'Lexend', Arial, sans-serif;
   line-height: 84.39%;
-  letter-spacing: -0.075em;
   font-weight: 100;
   position: relative;
   /* Blobby/puffy efekt için yumuşak gölgeler */

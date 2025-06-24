@@ -73,11 +73,13 @@ const backendTech = [
   margin-bottom: 2rem;
   font-family: 'Lexend', Arial, sans-serif;
   letter-spacing: 0.04em;
-  color: #fff;
+  color: #f7d4fa;
   text-shadow:
-    0 0 8px #a78bfa,
-    0 0 16px #a78bfa99,
-    0 0 32px #67e8f966;
+    0 2px 8px #c026d3,
+    0 8px 24px #a78bfa,
+    0 1px 0 #fff,
+    0 0px 2px #fff;
+  transition: all 0.7s cubic-bezier(.4,0,.2,1);
   transition: all 0.7s cubic-bezier(.4,0,.2,1);
 }
 @media (min-width: 640px) {

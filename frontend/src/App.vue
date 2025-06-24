@@ -5,16 +5,19 @@ import { SunIcon, MoonIcon } from '@heroicons/vue/24/outline'
 import { defineAsyncComponent, Suspense } from 'vue'
 import Hero from './components/Hero.vue'
 import Cursor from './components/Cursor.vue'
-// Koyu mod
-const isDark = useDark()
-const toggleDarkMode = useToggle(isDark)
+import OrbBubbles from './components/OrbBubbles.vue'
+
 const navOpen = ref(false)
 
 </script>
 
 <template>
   <Cursor />
+
+  <OrbBubbles />
+
   <div class="min-h-screen bg-background text-white font-sans flex flex-col">
+
     <!-- Navbar -->
     <nav class="fixed top-0 left-0 w-full flex justify-between items-center px-4 sm:px-6 lg:px-8 py-3 sm:py-4
                 bg-gray-900/80 backdrop-blur shadow-md z-50  transition-all duration-300">
@@ -71,13 +74,14 @@ const navOpen = ref(false)
     </Transition>
 
     <!-- Footer -->
-    <footer class="w-full text-xs text-gray-500 text-center py-4 border-t border-gray-800 bg-gray-900">
-      © {{ new Date().getFullYear() }} Eylem. Tüm hakları saklıdır.
+    <footer class="w-full text-xs text-gray-500 text-center py-4   bg-gray-900">
+      © {{ new Date().getFullYear() }} Eylem Seyhan. Tüm hakları saklıdır.
     </footer>
   </div>
 </template>
 
 <style>
+
 .page-enter-active, .page-leave-active {
   transition: opacity 0.4s cubic-bezier(.4,0,.2,1), transform 0.4s cubic-bezier(.4,0,.2,1);
 }
@@ -146,4 +150,5 @@ const navOpen = ref(false)
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+
 </style>

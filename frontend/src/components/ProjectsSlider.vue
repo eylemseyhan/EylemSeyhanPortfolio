@@ -1,8 +1,8 @@
 <template>
-  <div class="w-full max-w-4xl mx-auto mt-16 relative">
+  <div class="w-full max-w-4xl mx-auto mt-8 relative">
     <!-- Sol Ok -->
     <button
-      class="slider-arrow left-0"
+      class="slider-arrow left-0 -left-14"
       @click="goPrev"
       aria-label="Önceki"
     >
@@ -14,7 +14,7 @@
     </button>
     <!-- Sağ Ok -->
     <button
-      class="slider-arrow right-0"
+      class="slider-arrow right-0 -right-14"
       @click="goNext"
       aria-label="Sonraki"
     >
@@ -30,23 +30,46 @@
       :slides-per-view="1"
       :space-between="30"
       :pagination="{ clickable: true }"
-      :navigation="true"
+      :navigation="false"
       class="mySwiper"
+      style="touch-action: pan-x;"
+      @swiper="onSwiper"
     >
       <swiper-slide v-for="project in sliderProjects" :key="project.id">
-        <div class="bg-gray-900/80 rounded-3xl shadow-2xl overflow-hidden flex flex-col items-center">
-          <div class="w-full aspect-w-16 aspect-h-9 bg-gray-800 flex items-center justify-center">
+        <div class="slider-card">
+          <div
+            class="w-full bg-gray-800 flex items-center justify-center gap-4 py-4"
+          >
             <img
+              v-if="project.coverImageUrl2"
               :src="project.coverImageUrl"
               :alt="project.title"
-              class="max-h-full max-w-full object-contain"
+              class="max-h-96 max-w-xs object-contain rounded-xl shadow"
+            />
+            <img
+              v-if="project.coverImageUrl2"
+              :src="project.coverImageUrl2"
+              :alt="project.title + ' 2'"
+              class="max-h-96 max-w-xs object-contain rounded-xl shadow"
+            />
+            <img
+              v-else
+              :src="project.coverImageUrl"
+              :alt="project.title"
+              class="max-h-96 max-w-2xl object-contain rounded-xl shadow mx-auto"
             />
           </div>
           <div class="p-6 w-full flex flex-col items-center">
-            <h2 class="text-2xl font-bold mb-2 bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent text-center">{{ project.title }}</h2>
+            <h2 class="text-2xl font-bold mb-2 gradient-text text-center font-sans tracking-tight">
+              {{ project.title }}
+            </h2>
             <p class="text-gray-300 text-base mb-4 text-center">{{ project.description }}</p>
             <div class="flex flex-wrap gap-2 mb-4 justify-center">
-              <span v-for="tech in project.technologies" :key="tech" class="px-2 py-1 bg-gray-700 text-gray-200 text-xs rounded-full">
+              <span
+                v-for="tech in project.technologies"
+                :key="tech"
+                class="tech-chip"
+              >
                 {{ tech }}
               </span>
             </div>
@@ -54,8 +77,27 @@
               v-if="project.githubUrl"
               :href="project.githubUrl"
               target="_blank"
-              class="px-4 py-2 bg-gradient-to-r from-purple-500 to-cyan-500 text-white rounded-lg text-xs font-semibold shadow hover:brightness-110 transition"
-            >GitHub</a>
+              class="github-btn flex items-center justify-center bg-transparent shadow-none border-none p-0 hover:bg-transparent"
+              aria-label="GitHub: {{ project.title }}"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="28"
+                height="28"
+                viewBox="0 0 24 24"
+                fill="white"
+                stroke="white"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path
+                  fill="white"
+                  d="M12 2C6.48 2 2 6.58 2 12.26c0 4.48 2.87 8.28 6.84 9.63.5.09.68-.22.68-.48 0-.24-.01-.87-.01-1.7-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.1-1.5-1.1-1.5-.9-.63.07-.62.07-.62 1 .07 1.53 1.05 1.53 1.05.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.7 0 0 .84-.28 2.75 1.05A9.38 9.38 0 0 1 12 6.84c.85.004 1.71.12 2.51.35 1.91-1.33 2.75-1.05 2.75-1.05.55 1.4.2 2.44.1 2.7.64.72 1.03 1.63 1.03 2.75 0 3.94-2.34 4.81-4.57 5.07.36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.81 0 .27.18.58.69.48A10.01 10.01 0 0 0 22 12.26C22 6.58 17.52 2 12 2Z"
+                />
+              </svg>
+            </a>
           </div>
         </div>
       </swiper-slide>
@@ -74,14 +116,19 @@ import { useProjects } from '@/composables/useProjects'
 
 const { projects: allProjects, loading, error } = useProjects()
 const swiperRef = ref(null)
+const swiperInstance = ref(null)
 
 const sliderProjects = computed(() => allProjects.value.slice(0, 5))
 
 function goPrev() {
-  swiperRef.value?.swiper?.slidePrev()
+  swiperInstance.value?.slidePrev()
 }
 function goNext() {
-  swiperRef.value?.swiper?.slideNext()
+  swiperInstance.value?.slideNext()
+}
+
+function onSwiper(swiper) {
+  swiperInstance.value = swiper
 }
 
 if (error.value) {
@@ -113,29 +160,112 @@ if (error.value) {
 }
 
 .arrow-bg {
-  @apply flex items-center justify-center w-12 h-12 rounded-full transition-all duration-200;
+  position: relative;
+  width: 48px;
+  height: 48px;
+  border-radius: 9999px;
   background: linear-gradient(135deg, #23244d 0%, #2d1e3a 100%);
-  box-shadow: 0 2px 16px 0 #67e8f955, 0 0 0 0 #a78bfa00;
+  box-shadow: 0 2px 16px #67e8f955;
   border: 1.5px solid rgba(167, 139, 250, 0.18);
   backdrop-filter: blur(6px);
   opacity: 0.92;
-  /* Hafif cam efekti */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease-out;
+  overflow: hidden;
 }
 
-.slider-arrow svg {
-  @apply transition-transform duration-200;
-  filter: drop-shadow(0 0 4px #a5f3fc88);
+.arrow-bg::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0px;
+  height: 0px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.6s ease, height 0.6s ease, opacity 0.6s ease;
+  z-index: 0;
+  opacity: 0;
+}
+
+.slider-arrow:hover .arrow-bg::after {
+  width: 180px;
+  height: 180px;
+  opacity: 1;
 }
 
 .slider-arrow:hover .arrow-bg {
-  @apply scale-110;
-  background: linear-gradient(135deg, #a5f3fc 0%, #a78bfa 100%);
-  box-shadow: 0 0 32px 8px #a5f3fc66, 0 0 0 0 #a78bfa00;
-  border-color: #a5f3fc;
-  opacity: 1;
-  filter: blur(1.5px) brightness(1.15);
+  animation: jellyWobble 0.6s ease;
+  transform: scale(1.05);
+  background: radial-gradient(circle at 30% 30%, #a5f3fc66, #a78bfa55);
+  box-shadow: 0 4px 20px rgba(165, 243, 252, 0.4), inset 0 0 8px rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.2);
+  filter: brightness(1.08);
 }
 
-.slider-arrow.left-0 { left: -2.5rem; }
-.slider-arrow.right-0 { right: -2.5rem; }
+.slider-arrow svg {
+  position: relative;
+  z-index: 1;
+  filter: drop-shadow(0 0 4px #a5f3fc88);
+  transition: transform 0.3s ease;
+}
+
+@keyframes jellyWobble {
+  0% { transform: scale(1); }
+  25% { transform: scale(1.1, 0.9); }
+  50% { transform: scale(0.9, 1.1); }
+  75% { transform: scale(1.05, 0.95); }
+  100% { transform: scale(1); }
+}
+
+.tech-chip {
+  @apply px-3 py-1 rounded-full text-xs font-semibold;
+  background: linear-gradient(135deg, #23244d 0%, #2d1e3a 100%);
+  color: #ffff;
+  box-shadow: 0 0 8px 2px #a5f3fc55, 0 0 16px 4px #a78bfa33;
+  
+  border-image: linear-gradient(90deg, #a5f3fc 0%, #a78bfa 100%) 1;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.tech-chip:hover {
+  transform: scale(1.08) skewX(-6deg);
+  box-shadow: 0 0 16px 4px #a5f3fc99, 0 0 32px 8px #a78bfa66;
+  color: #fff;
+  background: linear-gradient(90deg, #a5f3fc33 0%, #a78bfa33 100%);
+}
+
+.github-btn {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  min-width: 0;
+  transition: transform 0.3s, box-shadow 0.3s, filter 0.3s;
+}
+.github-btn:hover {
+  transform: scale(1.22);
+
+}
+
+:deep(.swiper-pagination-bullet) {
+  background: #334155;
+  opacity: 1;
+  transition: background 0.3s, transform 0.3s;
+}
+:deep(.swiper-pagination-bullet-active) {
+  background: #a5f3fc;
+  transform: scale(1.2);
+}
+
+.gradient-text {
+  background: linear-gradient(90deg, #67e8f9, #a78bfa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+}
+
 </style> 

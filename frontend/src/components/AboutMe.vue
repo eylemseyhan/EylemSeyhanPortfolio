@@ -5,35 +5,36 @@
       <div class="aboutme-timeline-item animate-fade-in delay-100">
         <div class="timeline-dot dot-cyan-purple"></div>
         <div class="timeline-card">
-          <p class="timeline-year">2025</p>
-          <h3 class="timeline-job cursor-hover">DDI Teknoloji – Part-time Developer</h3>
+          <p class="timeline-year">Nisan - Haziran 2025</p>
+          <h3 class="timeline-job cursor-hover">DDI Teknoloji – Part Time Developer</h3>
         </div>
       </div>
-      <div class="aboutme-timeline-item animate-fade-in delay-200">
-        <div class="timeline-dot dot-pink-purple"></div>
-        <div class="timeline-card">
-          <p class="timeline-year">2024</p>
-          <h3 class="timeline-job cursor-hover">Abdi İbrahim – AI Intern</h3>
-        </div>
-      </div>
+      
       <div class="aboutme-timeline-item animate-fade-in delay-300">
         <div class="timeline-dot dot-purple-blue"></div>
         <div class="timeline-card">
-          <p class="timeline-year">2024</p>
+          <p class="timeline-year">Ağustos - Eylül 2024</p>
           <h3 class="timeline-job cursor-hover">Enerjisa Üretim – Intern</h3>
         </div>
       </div>
       <div class="aboutme-timeline-item animate-fade-in delay-400">
         <div class="timeline-dot dot-cyan-blue"></div>
         <div class="timeline-card">
-          <p class="timeline-year">2024</p>
+          <p class="timeline-year">Temmuz - Ağustos 2024</p>
           <h3 class="timeline-job cursor-hover">Devlet Su İşleri – Intern</h3>
+        </div>
+      </div>
+      <div class="aboutme-timeline-item animate-fade-in delay-200">
+        <div class="timeline-dot dot-pink-purple"></div>
+        <div class="timeline-card">
+          <p class="timeline-year">Mart - Haziran 2024</p>
+          <h3 class="timeline-job cursor-hover">Abdi İbrahim – AI Intern</h3>
         </div>
       </div>
       <div class="aboutme-timeline-item animate-fade-in delay-500">
         <div class="timeline-dot dot-indigo-cyan"></div>
         <div class="timeline-card">
-          <p class="timeline-year">2021</p>
+          <p class="timeline-year">Kasım - Aralık 2021</p>
           <h3 class="timeline-job cursor-hover">DenizBank – Denizaşırı Online Intern</h3>
         </div>
       </div>
@@ -56,11 +57,12 @@
   margin-bottom: 2rem;
   font-family: 'Lexend', Arial, sans-serif;
   letter-spacing: 0.04em;
-  color: #fff;
+  color: #f7d4fa;
   text-shadow:
-    0 0 8px #a78bfa,
-    0 0 16px #a78bfa99,
-    0 0 32px #67e8f966;
+    0 2px 8px #c026d3,
+    0 8px 24px #a78bfa,
+    0 1px 0 #fff,
+    0 0px 2px #fff;
   transition: all 0.7s cubic-bezier(.4,0,.2,1);
 }
 @media (min-width: 640px) {
