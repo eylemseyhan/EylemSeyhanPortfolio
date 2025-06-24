@@ -35,29 +35,12 @@
       style="touch-action: pan-x;"
       @swiper="onSwiper"
     >
-      <swiper-slide v-for="project in sliderProjects" :key="project.id">
+      <swiper-slide v-for="(project, idx) in sliderProjects" :key="project.id">
         <div class="slider-card">
-          <div
-            class="w-full bg-gray-800 flex items-center justify-center gap-4 py-4"
-          >
-            <img
-              v-if="project.coverImageUrl2"
-              :src="project.coverImageUrl"
-              :alt="project.title"
-              class="max-h-96 max-w-xs object-contain rounded-xl shadow"
-            />
-            <img
-              v-if="project.coverImageUrl2"
-              :src="project.coverImageUrl2"
-              :alt="project.title + ' 2'"
-              class="max-h-96 max-w-xs object-contain rounded-xl shadow"
-            />
-            <img
-              v-else
-              :src="project.coverImageUrl"
-              :alt="project.title"
-              class="max-h-96 max-w-2xl object-contain rounded-xl shadow mx-auto"
-            />
+          <div class="w-full flex items-center justify-center gap-4 py-4">
+            <div class="w-full aspect-w-16 aspect-h-9 flex items-center justify-center bg-gray-800 rounded-2xl overflow-hidden">
+              <img :src="project.coverImageUrl" :alt="project.title" class="max-h-full max-w-full object-contain" />
+            </div>
           </div>
           <div class="p-6 w-full flex flex-col items-center">
             <h2 class="text-2xl font-bold mb-2 gradient-text text-center font-sans tracking-tight">
@@ -266,6 +249,20 @@ if (error.value) {
   -webkit-text-fill-color: transparent;
   background-clip: text;
   color: transparent;
+}
+
+/* Mockup stilleri */
+.macbook-mockup {
+  border-radius: 18px 18px 12px 12px;
+  border: 3px solid #444;
+  box-shadow: 0 8px 32px 0 #a78bfa33, 0 0 0 8px #fff1;
+  background: linear-gradient(180deg, #23244d 60%, #18181b 100%);
+}
+.iphone-mockup {
+  border-radius: 32px;
+  border: 3px solid #444;
+  box-shadow: 0 8px 32px 0 #67e8f933, 0 0 0 8px #fff1;
+  background: linear-gradient(180deg, #23244d 60%, #18181b 100%);
 }
 
 </style> 
