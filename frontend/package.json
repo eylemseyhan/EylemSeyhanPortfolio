@@ -19,6 +19,7 @@
         "firebase": "^10.10.0",
         "firebase-admin": "^13.4.0",
         "gsap": "^3.13.0",
+        "nodemailer": "^7.0.3",
         "swiper": "^11.0.6",
         "three": "^0.152.2",
         "vue": "^3.4.21",
