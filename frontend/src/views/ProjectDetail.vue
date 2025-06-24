@@ -1,6 +1,6 @@
 <template>
   <main class="min-h-screen py-12 px-4 sm:px-6 lg:px-8  relative overflow-x-hidden">
-    <div v-if="loading" class="text-center text-cyan-300 animate-pulse mt-32 text-xl font-semibold">
+    <div v-if="loading" class="text-center text-white animate-pulse mt-32 text-xl font-semibold">
       <p>Proje yükleniyor...</p>
     </div>
     <div v-else-if="error" class="text-center text-pink-400 mt-32 text-lg font-semibold">
@@ -64,10 +64,43 @@
           <div
             v-for="(image, index) in project.images"
             :key="index"
-            class="rounded-xl overflow-hidden border-2 border-cyan-400/30 neon-img transition-transform duration-300 hover:scale-105 hover:shadow-cyan-400/40 hover:shadow-2xl"
+            class="relative rounded-xl overflow-hidden border-2 border-cyan-400/30 neon-img transition-transform duration-300 hover:scale-105 hover:shadow-cyan-400/40 hover:shadow-2xl bg-[#18122B]/60 cursor-zoom-in"
+            @click="openModal(image)"
           >
             <img :src="image.url" :alt="image.caption || project.title" class="w-full h-auto object-cover" />
-            <p v-if="image.caption" class="p-2 text-sm text-center text-cyan-300 font-semibold">{{ image.caption }}</p>
+            <!-- Büyüteç ikonu -->
+            <span class="absolute top-2 right-2 bg-black/50 rounded-full p-1 pointer-events-none">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-cyan-200 opacity-80" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1116.65 16.65z" />
+              </svg>
+            </span>
+            <p v-if="image.caption" class="p-2 text-sm text-center text-cyan-300 bg-[#23244d]/60 font-mono">{{ image.caption }}</p>
+          </div>
+        </div>
+
+        <!-- Modal -->
+        <div
+          v-if="modalImage"
+          class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm"
+          @click.self="closeModal"
+        >
+          <div class="relative max-w-3xl w-full mx-4">
+            <img
+              :src="modalImage.url"
+              :alt="modalImage.caption || project.title"
+              class="w-full h-auto rounded-2xl shadow-2xl border-2 border-cyan-400/40"
+            />
+            <!-- Çarpı (Kapat) İkonu -->
+            <button
+              @click="closeModal"
+              class="absolute top-2 right-2 bg-black/60 rounded-full p-2 text-cyan-200 hover:bg-cyan-700/80 transition"
+              aria-label="Kapat"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+            <p v-if="modalImage.caption" class="p-2 text-center text-cyan-200 font-mono">{{ modalImage.caption }}</p>
           </div>
         </div>
       </section>
@@ -76,13 +109,34 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
+import { onMounted, ref, onBeforeUnmount } from 'vue'
 import { useRoute } from 'vue-router'
 import { useProject } from '@/composables/useProject'
 
 const route = useRoute()
 const projectId = route.params.id
 const { project, loading, error, loadProject } = useProject(projectId)
+
+const modalImage = ref(null)
+
+function openModal(image) {
+  modalImage.value = image
+}
+function closeModal() {
+  modalImage.value = null
+}
+
+// ESC ile modal kapansın
+function handleKeydown(e) {
+  if (e.key === 'Escape') closeModal()
+}
+
+onMounted(() => {
+  window.addEventListener('keydown', handleKeydown)
+})
+onBeforeUnmount(() => {
+  window.removeEventListener('keydown', handleKeydown)
+})
 
 onMounted(loadProject)
 </script>
@@ -103,7 +157,7 @@ onMounted(loadProject)
 .tech-chip-neon {
   @apply px-3 py-1 rounded-full text-xs font-semibold;
   background: linear-gradient(135deg, #23244d 0%, #2d1e3a 100%);
-  color: #a5f3fc;
+  color: #fff;
   border: 1.5px solid #a5f3fc88;
   box-shadow: 0 0 8px 2px #a5f3fc55, 0 0 16px 4px #a78bfa33;
   transition: transform 0.2s, box-shadow 0.2s, color 0.2s;
