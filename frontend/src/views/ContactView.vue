@@ -13,6 +13,15 @@
       </div>
       <div class="bg-dark-lighter/50 backdrop-blur rounded-2xl border border-gray-600 p-4 sm:p-6 lg:p-8">
         <form @submit.prevent="handleSubmit" class="space-y-4 sm:space-y-6" aria-label="İletişim Formu">
+          <!-- Honeypot alanı: botlar için gizli input -->
+          <input
+            type="text"
+            v-model="form.botCheck"
+            class="hidden"
+            tabindex="-1"
+            autocomplete="off"
+            aria-hidden="true"
+          />
           <div>
             <label for="name" class="block text-sm font-medium text-gray-300 mb-2">Ad Soyad</label>
             <input
@@ -113,7 +122,8 @@ const form = ref({
   name: '',
   email: '',
   phone: '',
-  message: ''
+  message: '',
+  botCheck: '' // honeypot alanı
 })
 
 const loading = ref(false)
@@ -134,6 +144,11 @@ const isFormValid = computed(() => {
 })
 
 const handleSubmit = async () => {
+  if (form.value.botCheck !== '') {
+    error.value = 'Bot olduğunuzdan şüphelenildi.';
+    setTimeout(() => error.value = '', 3000);
+    return;
+  }
   if (!isFormValid.value) {
     error.value = 'Lütfen tüm alanları doğru şekilde doldurun.'
     setTimeout(() => error.value = '', 3000);
@@ -149,7 +164,7 @@ const handleSubmit = async () => {
     await sendContactForm(form.value)
 
     success.value = true
-    form.value = { name: '', email: '', phone: '', message: '' }
+    form.value = { name: '', email: '', phone: '', message: '', botCheck: '' }
     
     setTimeout(() => {
       success.value = false
