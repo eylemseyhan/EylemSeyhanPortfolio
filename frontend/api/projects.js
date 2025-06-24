@@ -16,11 +16,38 @@ if (!getApps().length) {
 const db = getFirestore()
 
 export default async function handler(req, res) {
-    try {
-        const snapshot = await db.collection('projects').get()
-        const projects = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
-        res.status(200).json(projects)
-    } catch (error) {
-        res.status(500).json({ error: error.message })
+    if (req.method === 'GET') {
+        // Tekil proje mi, tüm projeler mi?
+        const { id } = req.query
+        if (id) {
+            // getProjectById
+            try {
+                const projectDoc = await db.collection('projects').doc(id).get()
+                if (!projectDoc.exists) {
+                    return res.status(404).json({ error: 'Project not found' })
+                }
+                const project = { id: projectDoc.id, ...projectDoc.data() }
+                return res.status(200).json(project)
+            } catch (error) {
+                return res.status(500).json({ error: 'Failed to fetch project' })
+            }
+        } else {
+            // getProjects
+            try {
+                const projectsSnapshot = await db.collection('projects').orderBy('order', 'asc').get()
+                if (projectsSnapshot.empty) {
+                    return res.status(404).json({ error: 'No projects found' })
+                }
+                const projects = projectsSnapshot.docs.map(doc => ({
+                    id: doc.id,
+                    ...doc.data()
+                }))
+                return res.status(200).json(projects)
+            } catch (error) {
+                return res.status(500).json({ error: 'Failed to fetch projects' })
+            }
+        }
+    } else {
+        res.status(405).json({ error: 'Method not allowed' })
     }
 }
