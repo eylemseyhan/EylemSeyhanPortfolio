@@ -2,7 +2,6 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 import './assets/main.css'
-import { sanitizeDirective } from './directives/sanitize'
 import { MotionPlugin } from '@vueuse/motion'
 import Tres from '@tresjs/core'
 
