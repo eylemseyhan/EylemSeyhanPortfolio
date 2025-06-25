@@ -44,18 +44,19 @@ import {
   GlobeAltIcon
 } from '@heroicons/vue/24/solid'
 
-// Kullanılan frontend teknolojileri
+
 const frontendTech = [
   { name: 'Vue.js', icon: CodeBracketIcon, color: 'text-cyan-300' },
-  { name: 'Tailwind CSS', icon: PaintBrushIcon, color: 'text-sky-400' }
+  { name: 'Tailwind CSS', icon: PaintBrushIcon, color: 'text-sky-400' },
+  { name: 'React', icon: CodeBracketIcon, color: 'text-cyan-300' }
 ]
-// Kullanılan backend teknolojileri
+
 const backendTech = [
-  { name: 'Node.js', icon: ServerStackIcon, color: 'text-lime-400' },
   { name: 'Lua', icon: CpuChipIcon, color: 'text-yellow-400' },
   { name: 'xUnit', icon: BeakerIcon, color: 'text-pink-400' },
   { name: 'C#', icon: CodeBracketIcon, color: 'text-blue-400' },
-  { name: '.NET', icon: GlobeAltIcon, color: 'text-purple-400' }
+  { name: '.NET', icon: GlobeAltIcon, color: 'text-purple-400' },
+  { name: 'Node.js', icon: ServerStackIcon, color: 'text-lime-400' }
 ]
 </script>
 

@@ -2,7 +2,7 @@
   <div class="w-full max-w-4xl mx-auto mt-8 relative">
     <!-- Sol Ok -->
     <button
-      class="slider-arrow left-0 -left-14"
+      class="slider-arrow left-0 -left-20"
       @click="goPrev"
       aria-label="Önceki"
     >
@@ -14,7 +14,7 @@
     </button>
     <!-- Sağ Ok -->
     <button
-      class="slider-arrow right-0 -right-14"
+      class="slider-arrow right-0 -right-20"
       @click="goNext"
       aria-label="Sonraki"
     >

@@ -8,8 +8,8 @@ import Tres from '@tresjs/core'
 
 const app = createApp(App)
 
-// Global direktifleri kaydet
-app.directive('sanitize', sanitizeDirective)
+
+
 
 app.use(router)
 app.use(MotionPlugin)
