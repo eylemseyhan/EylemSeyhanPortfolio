@@ -80,12 +80,10 @@ const experiences = [
   margin-bottom: 2rem;
   font-family: "Lexend", Arial, sans-serif;
   letter-spacing: 0.04em;
-  background: linear-gradient(90deg, #a78bfa, #67e8f9 60%, #22d3ee 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  color: transparent;
-  text-shadow: 0 0 16px #a5f3fc88, 0 0 32px #a78bfa55;
+  color: #f7d4fa;
+  text-shadow: 0 2px 8px #c026d3, 0 8px 24px #a78bfa, 0 1px 0 #fff,
+    0 0px 2px #fff;
+  transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
   transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
 }
 @media (min-width: 640px) {
