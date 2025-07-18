@@ -1,69 +1,92 @@
 <template>
   <div class="aboutme-container">
     <h2 class="aboutme-title cursor-hover">Deneyimlerim</h2>
-    <div class="aboutme-timeline">
-      <div class="aboutme-timeline-item animate-fade-in delay-100">
-        <div class="timeline-dot dot-cyan-purple"></div>
-        <div class="timeline-card">
-          <p class="timeline-year">Nisan - Haziran 2025</p>
-          <h3 class="timeline-job cursor-hover">DDI Teknoloji – Part Time Developer</h3>
+    <div class="timeline-zigzag">
+      <div
+        v-for="(exp, i) in experiences"
+        :key="i"
+        :class="['timeline-zigzag__container', i % 2 === 0 ? 'left' : 'right']"
+      >
+        <div :class="['timeline-zigzag__row', i % 2 === 0 ? 'right' : 'left']">
+          <template v-if="i % 2 === 0">
+            <div class="timeline-zigzag__dot"></div>
+            <div class="timeline-zigzag__date right">{{ exp.date }}</div>
+          </template>
+          <template v-else>
+            <div class="timeline-zigzag__date left">{{ exp.date }}</div>
+            <div class="timeline-zigzag__dot"></div>
+          </template>
         </div>
-      </div>
-      
-      <div class="aboutme-timeline-item animate-fade-in delay-300">
-        <div class="timeline-dot dot-purple-blue"></div>
-        <div class="timeline-card">
-          <p class="timeline-year">Ağustos - Eylül 2024</p>
-          <h3 class="timeline-job cursor-hover">Enerjisa Üretim – Intern</h3>
-        </div>
-      </div>
-      <div class="aboutme-timeline-item animate-fade-in delay-400">
-        <div class="timeline-dot dot-cyan-blue"></div>
-        <div class="timeline-card">
-          <p class="timeline-year">Temmuz - Ağustos 2024</p>
-          <h3 class="timeline-job cursor-hover">Devlet Su İşleri – Intern</h3>
-        </div>
-      </div>
-      <div class="aboutme-timeline-item animate-fade-in delay-200">
-        <div class="timeline-dot dot-pink-purple"></div>
-        <div class="timeline-card">
-          <p class="timeline-year">Mart - Haziran 2024</p>
-          <h3 class="timeline-job cursor-hover">Abdi İbrahim – AI Intern</h3>
-        </div>
-      </div>
-      <div class="aboutme-timeline-item animate-fade-in delay-500">
-        <div class="timeline-dot dot-indigo-cyan"></div>
-        <div class="timeline-card">
-          <p class="timeline-year">Kasım - Aralık 2021</p>
-          <h3 class="timeline-job cursor-hover">DenizBank – Denizaşırı Online Intern</h3>
+        <div class="timeline-zigzag__content">
+          <h3>{{ exp.title }}</h3>
+          <div class="company">{{ exp.company }}</div>
+          <p>{{ exp.desc }}</p>
         </div>
       </div>
     </div>
   </div>
 </template>
 
+<script setup>
+const experiences = [
+  {
+    title: "Part Time Developer",
+    company: "DDI Teknoloji",
+    date: "Nisan - Temmuz 2025",
+    desc: "NLua ile entegre .NET modülleri için birim ve entegrasyon testleri geliştirdim ve bu scriptlerin kurulumu, kullanımı ve bakımıyla ilgili detaylı bir dokümantasyon hazırladım.",
+  },
+  {
+    title: "Intern",
+    company: "Enerjisa Üretim",
+    date: "Ağustos - Eylül 2024",
+    desc: "Power Plant App adlı uygulamayı .NET Core ve Identity ile geliştirerek authentication ve yetkilendirme authorization süreçlerini güvenli hale getirdim. Kullanıcı yetkilerine göre santral ekleme, güncelleme ve detaylı veri görüntüleme gibi CRUD işlemleri gerçekleştirilebiliyor.",
+  },
+  {
+    title: "Intern",
+    company: "Devlet Su İşleri",
+    date: "Temmuz - Ağustos 2024",
+    desc: "ASP.NET MVC ile DSİ Athletic Club Management System adlı bir web uygulaması geliştirdim. Bu sistem, öğrenci kayıtlarını, spor branşlarını ve kurs katılımlarını yönetmek amacıyla tasarlandı. Projede Entity Framework ile veritabanı işlemlerini yönettim, kullanıcı arayüzünü HTML, CSS, JavaScript ve jQuery ile oluşturdum. Dashboard ekranında toplam öğrenci sayısı, aktif sporcular ve katılım oranı gibi istatistikleri görselleştirdim.",
+  },
+  {
+    title: "AI Intern",
+    company: "Abdi İbrahim",
+    date: "Mart - Haziran 2024",
+    desc: "PDF belgelerinden vektör indeksleme ve prompt engineering ile yanıtlar çıkaran, LangChain ve OpenAI tabanlı yapay zekâ destekli bir Soru-Cevap sistemi geliştirdim.",
+  },
+  {
+    title: "Denizaşırı Online Intern",
+    company: "DenizBank",
+    date: "Kasım - Aralık 2021",
+    desc: 'Program süresince iletişimden insan kaynaklarına, bankacılık süreçlerinden dijital dönüşüme kadar birçok alanda uzmanlardan eğitimler aldım. Kahoot yarışmaları, vaka analizleri ve "Birbirinden Öğrenme" oturumlarıyla interaktif bir deneyim yaşadım. Hazine, yatırım bankacılığı, risk yönetimi gibi teknik konularla ilgili sunumlara katılarak bankacılıkla ilgili genel bir perspektif kazandım.',
+  },
+];
+</script>
+
 <style scoped>
 .aboutme-container {
   width: 100%;
-  max-width: 48rem;
+
+  max-width: 100%;
   margin: 0 auto;
-  padding-left: 1rem;
-  padding-right: 1rem;
+  padding-left: 2.5vw;
+  padding-right: 2.5vw;
+
+  border-radius: 1.5rem;
 }
 .aboutme-title {
   font-size: 2.25rem;
   font-weight: 800;
   text-align: center;
   margin-bottom: 2rem;
-  font-family: 'Lexend', Arial, sans-serif;
+  font-family: "Lexend", Arial, sans-serif;
   letter-spacing: 0.04em;
-  color: #f7d4fa;
-  text-shadow:
-    0 2px 8px #c026d3,
-    0 8px 24px #a78bfa,
-    0 1px 0 #fff,
-    0 0px 2px #fff;
-  transition: all 0.7s cubic-bezier(.4,0,.2,1);
+  background: linear-gradient(90deg, #a78bfa, #67e8f9 60%, #22d3ee 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 0 16px #a5f3fc88, 0 0 32px #a78bfa55;
+  transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
 }
 @media (min-width: 640px) {
   .aboutme-title {
@@ -75,95 +98,197 @@
     font-size: 3.75rem;
   }
 }
-.aboutme-timeline {
+.timeline-zigzag {
   position: relative;
-  border-left: 1.5px solid rgba(255,255,255,0.18);
-  padding-left: 2rem;
-  display: flex;
-  flex-direction: column;
-  gap: 3rem;
+
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 0;
 }
-.aboutme-timeline-item {
-  position: relative;
-  opacity: 0;
-  transform: translateY(40px);
-  transition: all 0.7s cubic-bezier(.4,0,.2,1);
-  display: flex;
-  align-items: flex-start;
-}
-.timeline-dot {
+.timeline-zigzag::after {
+  content: "";
   position: absolute;
-  left: -1.25rem;
-  top: 0.5rem;
-  width: 1.25rem;
-  height: 1.25rem;
+  width: 3px;
+  background: linear-gradient(180deg, #67e8f9 0%, #a78bfa 100%);
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  margin-left: -1.5px;
+  z-index: 0;
+}
+.timeline-zigzag__container {
+  padding: 15px 30px;
+
+  position: relative;
+  background: inherit;
+  width: 55%;
+  min-width: 340px;
+  max-width: 600px;
+  min-height: 120px;
+  display: flex;
+  align-items: center;
+  z-index: 2;
+}
+.timeline-zigzag__container.left {
+  left: 0;
+  justify-content: flex-end;
+}
+.timeline-zigzag__container.right {
+  left: 50%;
+  justify-content: flex-start;
+}
+.timeline-zigzag__row {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  z-index: 3;
+  pointer-events: none;
+}
+.timeline-zigzag__row.right {
+  flex-direction: row;
+  left: 0;
+}
+.timeline-zigzag__row.left {
+  flex-direction: row-reverse;
+  right: 0;
+}
+.timeline-zigzag__dot {
+  width: 18px;
+  height: 18px;
+  background: linear-gradient(135deg, #67e8f9 0%, #a78bfa 100%);
+  border: 2px solid #fff;
   border-radius: 50%;
-  box-shadow: 0 0 16px 4px rgba(167,139,250,0.4);
+  box-shadow: 0 0 12px #67e8f9, 0 0 24px #a78bfa55;
+  z-index: 2;
 }
-.dot-cyan-purple {
-  background: linear-gradient(135deg, #06b6d4, #a78bfa);
+.timeline-zigzag__dot {
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  transform: translate(-50%, -50%);
+  width: 18px;
+  height: 18px;
+  background: linear-gradient(135deg, #67e8f9 0%, #a78bfa 100%);
+  border: 2px solid #fff;
+  border-radius: 50%;
+  z-index: 2;
+  box-shadow: 0 0 12px #67e8f9, 0 0 24px #a78bfa55;
 }
-.dot-pink-purple {
-  background: linear-gradient(135deg, #ec4899, #a78bfa);
+.timeline-zigzag__container.right .timeline-zigzag__dot {
+  left: 0%;
 }
-.dot-purple-blue {
-  background: linear-gradient(135deg, #a78bfa, #38bdf8);
-}
-.dot-cyan-blue {
-  background: linear-gradient(135deg, #67e8f9, #38bdf8);
-}
-.dot-indigo-cyan {
-  background: linear-gradient(135deg, #818cf8, #67e8f9);
-}
-.timeline-card {
-  margin-left: 1.5rem;
-}
-.timeline-year {
-  font-size: 1.25rem;
-  color: #67e8f9;
-  font-weight: 600;
-  margin-bottom: 0.25rem;
-}
-.timeline-job {
-  font-size: 1.5rem;
+
+.timeline-zigzag__date {
+  font-size: 1.08rem;
   font-weight: 700;
-  color: #fff;
-  transition: all 0.6s cubic-bezier(.4,0,.2,1);
+  color: #ffff;
+  font-family: "Lexend", Arial, sans-serif;
+  letter-spacing: 1px;
+  background: none;
+  box-shadow: none;
+  border: none;
+  padding: 0 12px;
+  line-height: 1;
+  white-space: nowrap;
+  pointer-events: auto;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
-/* Animasyonlar */
-@keyframes fade-in {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.timeline-zigzag__date.left {
+  right: calc(100% + 16px); /* KUTU SAĞDAYSAN TARİH SOLDA OLSUN */
+  text-align: right;
 }
-.animate-fade-in {
-  animation: fade-in 0.8s ease forwards;
-}
-.delay-100 { animation-delay: 0.1s; }
-.delay-200 { animation-delay: 0.2s; }
-.delay-300 { animation-delay: 0.3s; }
-.delay-400 { animation-delay: 0.4s; }
-.delay-500 { animation-delay: 0.5s; }
 
-/* Modern sinematik hover efektleri */
-.cursor-hover {
-  transform-style: preserve-3d;
-  perspective: 1000px;
+.timeline-zigzag__date.right {
+  left: calc(100% + 16px); /* KUTU SOLDAYSAN TARİH SAĞDA OLSUN */
+  text-align: left;
 }
-.cursor-hover:hover {
-  animation: glow-pulse 2s ease-in-out infinite;
-  scale: 1.08;
-  skew: 2deg;
-  letter-spacing: 0.04em;
+.timeline-zigzag__content {
+  padding: 30px 40px 30px 30px;
+  background: rgba(24, 18, 43, 0.92);
+  box-shadow: 0 0 16px #a5f3fc33;
+  font-family: "Lexend", Arial, sans-serif;
+  color: #e0e0ff;
+  min-width: 220px;
+  max-width: 420px;
+  border-radius: 16px;
+  position: relative;
+  z-index: 2;
 }
-@keyframes glow-pulse {
-  0%, 100% {
-    filter: drop-shadow(0 0 16px #a78bfa);
+.timeline-zigzag__content h3 {
+  margin: 0 0 10px 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  background: linear-gradient(90deg, #a78bfa, #67e8f9 60%, #22d3ee 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+  letter-spacing: 1px;
+}
+.timeline-zigzag__content .company {
+  font-size: 1rem;
+  color: #a78bfa;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 0 6px #a78bfa55;
+}
+.timeline-zigzag__content p {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #e0e0ff;
+  text-shadow: 0 0 4px #a5f3fc55;
+}
+@media (max-width: 1200px) {
+  .timeline-zigzag {
+    max-width: 100vw;
+    padding: 1rem 0;
   }
-  50% {
-    filter: drop-shadow(0 0 24px #a78bfa) drop-shadow(0 0 32px #a78bfa);
+  .timeline-zigzag__container {
+    max-width: 95vw;
+    min-width: 0;
+    padding: 15px 10px;
+  }
+}
+@media (max-width: 767.98px) {
+  .timeline-zigzag::after {
+    left: 24px;
+  }
+  .timeline-zigzag__container {
+    width: 100%;
+    padding-left: 60px;
+    padding-right: 10px;
+    min-height: 100px;
+    max-width: 100vw;
+    min-width: 0;
+  }
+  .timeline-zigzag__container.right {
+    left: 0%;
+  }
+  .timeline-zigzag__dot {
+    left: 24px !important;
+    transform: translateY(-50%);
+  }
+  .timeline-zigzag__date.right {
+    left: 60px !important;
+    right: auto !important;
+    text-align: left;
+  }
+  .timeline-zigzag__date.left {
+    right: 60px !important;
+    left: auto !important;
+    text-align: right;
+  }
+  .timeline-zigzag__content {
+    padding: 30px 20px 30px 30px;
+    max-width: 90vw;
+    min-width: 0;
   }
 }
 </style>
