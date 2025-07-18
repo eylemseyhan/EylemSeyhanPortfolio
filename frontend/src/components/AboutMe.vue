@@ -39,7 +39,7 @@ const experiences = [
     title: "Intern",
     company: "Enerjisa Üretim",
     date: "Ağustos - Eylül 2024",
-    desc: "Power Plant App adlı uygulamayı .NET Core ve Identity ile geliştirerek authentication ve yetkilendirme authorization süreçlerini güvenli hale getirdim. Kullanıcı yetkilerine göre santral ekleme, güncelleme ve detaylı veri görüntüleme gibi CRUD işlemleri gerçekleştirilebiliyor.",
+    desc: "Power Plant App adlı uygulamayı .NET Core ve Identity ile geliştirerek authentication ve authorization süreçlerini güvenli hale getirdim. Kullanıcı yetkilerine göre santral ekleme, güncelleme ve detaylı veri görüntüleme gibi CRUD işlemleri gerçekleştirilebiliyor.",
   },
   {
     title: "Intern",

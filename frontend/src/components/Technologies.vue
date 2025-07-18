@@ -59,9 +59,8 @@ import {
 } from "@heroicons/vue/24/solid";
 
 const frontendTech = [
-  { name: "Vue.js", icon: CodeBracketIcon, color: "text-cyan-300" },
-  { name: "Tailwind CSS", icon: PaintBrushIcon, color: "text-sky-400" },
-  { name: "React", icon: CodeBracketIcon, color: "text-cyan-300" },
+  { name: "Vue.js", icon: PaintBrushIcon, color: "text-cyan-300" },
+  { name: "React", icon: CodeBracketIcon, color: "text-yellow-400" },
 ];
 
 const backendTech = [
