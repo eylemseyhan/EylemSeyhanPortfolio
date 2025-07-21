@@ -4,7 +4,7 @@
     class="flex justify-center font-sans py-10"
   >
     <a
-      href="/cv/Eylem-Seyhan-Resume.pdf"
+      href="/cv/EylemSeyhanCV.pdf"
       download="Eylem-Seyhan-CV"
       class="cv-button group"
       aria-label="CV'mi İndir"
@@ -14,7 +14,7 @@
       <span class="sparkle"></span>
       <span class="sparkle"></span>
       <span class="sparkle"></span>
-      
+
       <!-- Text content with code brackets -->
       <span class="text-container">
         <span class="bracket left">&lt;</span>
@@ -28,17 +28,29 @@
 <style scoped>
 /* Keyframe animations for the effects */
 @keyframes sparkle-anim {
-  0% { transform: scale(0) rotate(0deg); opacity: 0.5; }
-  50% { transform: scale(1.2) rotate(180deg); opacity: 1; }
-  100% { transform: scale(0) rotate(360deg); opacity: 0; }
+  0% {
+    transform: scale(0) rotate(0deg);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.2) rotate(180deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0) rotate(360deg);
+    opacity: 0;
+  }
 }
 
 @keyframes glow-pulse {
-  0%, 100% {
-    box-shadow: 0 0 10px 5px rgba(203, 157, 209, 0.6), 0 0 10px 2px rgba(228, 226, 228, 0.7);
+  0%,
+  100% {
+    box-shadow: 0 0 10px 5px rgba(203, 157, 209, 0.6),
+      0 0 10px 2px rgba(228, 226, 228, 0.7);
   }
   50% {
-    box-shadow: 0 0 20px 10px rgba(234, 233, 234, 0.8), 0 0 20px 5px rgba(238, 237, 238, 0.9);
+    box-shadow: 0 0 20px 10px rgba(234, 233, 234, 0.8),
+      0 0 20px 5px rgba(238, 237, 238, 0.9);
   }
 }
 
@@ -56,7 +68,7 @@
   font-size: 1.1rem;
   border-radius: 50px; /* Bubbly, friendly shape */
   background: linear-gradient(45deg, #c026d3, #22d3ee);
-  
+
   box-shadow: 0 8px 25px rgba(162, 28, 175, 0.3);
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   transform: translateY(0);
