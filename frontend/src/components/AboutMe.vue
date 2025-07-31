@@ -35,31 +35,31 @@ import { computed, ref, onMounted, onUnmounted } from "vue";
 // Statik experiences array'leri
 const trExperiences = [
   {
-    title: "Part Time Developer",
+    title: "Yazılım Geliştirici",
     company: "DDI Teknoloji",
     date: "Nisan - Temmuz 2025",
     desc: "NLua ile entegre .NET modülleri için birim ve entegrasyon testleri geliştirdim ve bu scriptlerin kurulumu, kullanımı ve bakımıyla ilgili detaylı bir dokümantasyon hazırladım.",
   },
   {
-    title: "Intern",
+    title: "Stajyer",
     company: "Enerjisa Üretim",
     date: "Ağustos - Eylül 2024",
     desc: "Power Plant App adlı uygulamayı .NET Core ve Identity ile geliştirerek authentication ve authorization süreçlerini güvenli hale getirdim. Kullanıcı yetkilerine göre santral ekleme, güncelleme ve detaylı veri görüntüleme gibi CRUD işlemleri gerçekleştirilebiliyor.",
   },
   {
-    title: "Intern",
+    title: "Stajyer",
     company: "Devlet Su İşleri",
     date: "Temmuz - Ağustos 2024",
     desc: "ASP.NET MVC ile DSİ Athletic Club Management System adlı bir web uygulaması geliştirdim. Bu sistem, öğrenci kayıtlarını, spor branşlarını ve kurs katılımlarını yönetmek amacıyla tasarlandı. Projede Entity Framework ile veritabanı işlemlerini yönettim, kullanıcı arayüzünü HTML, CSS, JavaScript ve jQuery ile oluşturdum. Dashboard ekranında toplam öğrenci sayısı, aktif sporcular ve katılım oranı gibi istatistikleri görselleştirdim.",
   },
   {
-    title: "AI Intern",
-    company: "Abdi İbrahim",
+    title: "Yapay Zeka Stajyeri",
+    company: "Abdi İbrahim Teknoloji",
     date: "Mart - Haziran 2024",
     desc: "PDF belgelerinden vektör indeksleme ve prompt engineering ile yanıtlar çıkaran, LangChain ve OpenAI tabanlı yapay zekâ destekli bir Soru-Cevap sistemi geliştirdim.",
   },
   {
-    title: "Denizaşırı Online Intern",
+    title: "Denizaşırı Stajyeri",
     company: "DenizBank",
     date: "Kasım - Aralık 2021",
     desc: "Program süresince iletişimden insan kaynaklarına, bankacılık süreçlerinden dijital dönüşüme kadar birçok alanda uzmanlardan eğitimler aldım. Kahoot yarışmaları, vaka analizleri ve 'Birbirinden Öğrenme' oturumlarıyla interaktif bir deneyim yaşadım. Hazine, yatırım bankacılığı, risk yönetimi gibi teknik konularla ilgili sunumlara katılarak bankacılıkla ilgili genel bir perspektif kazandım.",
@@ -75,7 +75,7 @@ const enExperiences = [
   },
   {
     title: "Intern",
-    company: "Enerjisa Production",
+    company: "Enerjisa Uretim",
     date: "August - September 2024",
     desc: "I developed the Power Plant App application with .NET Core and Identity, making authentication and authorization processes secure. CRUD operations such as adding, updating and detailed data viewing of power plants can be performed according to user permissions.",
   },
@@ -87,12 +87,12 @@ const enExperiences = [
   },
   {
     title: "AI Intern",
-    company: "Abdi İbrahim",
+    company: "Abdi Business Technologies",
     date: "March - June 2024",
     desc: "I developed an AI-powered Question-Answer system based on LangChain and OpenAI that extracts responses from PDF documents through vector indexing and prompt engineering.",
   },
   {
-    title: "Overseas Online Intern",
+    title: "Denizasiri Intern",
     company: "DenizBank",
     date: "November - December 2021",
     desc: "During the program, I received training from experts in many areas from communication to human resources, from banking processes to digital transformation. I experienced an interactive experience with Kahoot competitions, case analyses and 'Learning from Each Other' sessions. I gained a general perspective on banking by participating in presentations on technical topics such as treasury, investment banking, and risk management.",
