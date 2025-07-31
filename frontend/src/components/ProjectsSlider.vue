@@ -4,11 +4,17 @@
     <button
       class="slider-arrow left-0 -left-28"
       @click="goPrev"
-      aria-label="Önceki"
+      :aria-label="currentLang === 'tr' ? 'Önceki' : 'Previous'"
     >
       <span class="arrow-bg">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-          <path d="M14 6L8 12L14 18" stroke="#a5f3fc" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path
+            d="M14 6L8 12L14 18"
+            stroke="#a5f3fc"
+            stroke-width="2.2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
         </svg>
       </span>
     </button>
@@ -16,11 +22,17 @@
     <button
       class="slider-arrow right-0 -right-28"
       @click="goNext"
-      aria-label="Sonraki"
+      :aria-label="currentLang === 'tr' ? 'Sonraki' : 'Next'"
     >
       <span class="arrow-bg">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-          <path d="M10 6L16 12L10 18" stroke="#a5f3fc" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path
+            d="M10 6L16 12L10 18"
+            stroke="#a5f3fc"
+            stroke-width="2.2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
         </svg>
       </span>
     </button>
@@ -32,21 +44,31 @@
       :pagination="{ clickable: true }"
       :navigation="false"
       class="mySwiper"
-      style="touch-action: pan-x;"
+      style="touch-action: pan-x"
       @swiper="onSwiper"
     >
       <swiper-slide v-for="(project, idx) in sliderProjects" :key="project.id">
         <div class="slider-card">
           <div class="w-full flex items-center justify-center gap-4 py-4">
-            <div class="w-full aspect-w-16 aspect-h-9 flex items-center justify-center bg-gray-800 rounded-2xl overflow-hidden">
-              <img :src="project.coverImageUrl" :alt="project.title" class="max-h-full max-w-full object-contain" />
+            <div
+              class="w-full aspect-w-16 aspect-h-9 flex items-center justify-center bg-gray-800 rounded-2xl overflow-hidden"
+            >
+              <img
+                :src="project.coverImageUrl"
+                :alt="project.title"
+                class="max-h-full max-w-full object-contain"
+              />
             </div>
           </div>
           <div class="p-6 w-full flex flex-col items-center">
-            <h2 class="text-2xl font-bold mb-2 gradient-text text-center font-sans tracking-tight">
+            <h2
+              class="text-2xl font-bold mb-2 gradient-text text-center font-sans tracking-tight"
+            >
               {{ project.title }}
             </h2>
-            <p class="text-gray-300 text-base mb-4 text-center">{{ project.description }}</p>
+            <p class="text-gray-300 text-base mb-4 text-center">
+              {{ project.description }}
+            </p>
             <div class="flex flex-wrap gap-2 mb-4 justify-center">
               <span
                 v-for="tech in project.technologies"
@@ -61,7 +83,7 @@
               :href="project.githubUrl"
               target="_blank"
               class="github-btn flex items-center justify-center bg-transparent shadow-none border-none p-0 hover:bg-transparent"
-              aria-label="GitHub: {{ project.title }}"
+              :aria-label="`GitHub: ${project.title}`"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -89,33 +111,49 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
-import { Swiper, SwiperSlide } from 'swiper/vue'
-import { Navigation, Pagination } from 'swiper/modules'
-import 'swiper/css'
-import 'swiper/css/pagination'
-import 'swiper/css/navigation'
-import { useProjects } from '@/composables/useProjects'
+import { ref, computed, onMounted, onUnmounted } from "vue";
+import { Swiper, SwiperSlide } from "swiper/vue";
+import { Navigation, Pagination } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+import { useProjects } from "@/composables/useProjects";
 
-const { projects: allProjects, loading, error } = useProjects()
-const swiperRef = ref(null)
-const swiperInstance = ref(null)
+const currentLang = ref(localStorage.getItem("language") || "tr");
 
-const sliderProjects = computed(() => allProjects.value.slice(0, 5))
+const { projects: allProjects, loading, error } = useProjects();
+const swiperRef = ref(null);
+const swiperInstance = ref(null);
+
+const sliderProjects = computed(() => allProjects.value.slice(0, 5));
 
 function goPrev() {
-  swiperInstance.value?.slidePrev()
+  swiperInstance.value?.slidePrev();
 }
 function goNext() {
-  swiperInstance.value?.slideNext()
+  swiperInstance.value?.slideNext();
 }
 
 function onSwiper(swiper) {
-  swiperInstance.value = swiper
+  swiperInstance.value = swiper;
 }
 
+// Dil değişikliğini dinle
+const handleLanguageChange = () => {
+  const newLang = localStorage.getItem("language") || "tr";
+  currentLang.value = newLang;
+};
+
+onMounted(() => {
+  window.addEventListener("languageChanged", handleLanguageChange);
+});
+
+onUnmounted(() => {
+  window.removeEventListener("languageChanged", handleLanguageChange);
+});
+
 if (error.value) {
-  console.error('Slider için projeler yüklenemedi:', error.value)
+  console.error("Slider için projeler yüklenemedi:", error.value);
 }
 </script>
 
@@ -184,7 +222,8 @@ if (error.value) {
   animation: jellyWobble 0.6s ease;
   transform: scale(1.05);
   background: radial-gradient(circle at 30% 30%, #a5f3fc66, #a78bfa55);
-  box-shadow: 0 4px 20px rgba(165, 243, 252, 0.4), inset 0 0 8px rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 20px rgba(165, 243, 252, 0.4),
+    inset 0 0 8px rgba(255, 255, 255, 0.2);
   border-color: rgba(255, 255, 255, 0.2);
   filter: brightness(1.08);
 }
@@ -197,11 +236,21 @@ if (error.value) {
 }
 
 @keyframes jellyWobble {
-  0% { transform: scale(1); }
-  25% { transform: scale(1.1, 0.9); }
-  50% { transform: scale(0.9, 1.1); }
-  75% { transform: scale(1.05, 0.95); }
-  100% { transform: scale(1); }
+  0% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(1.1, 0.9);
+  }
+  50% {
+    transform: scale(0.9, 1.1);
+  }
+  75% {
+    transform: scale(1.05, 0.95);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 .tech-chip {
@@ -209,7 +258,7 @@ if (error.value) {
   background: linear-gradient(135deg, #23244d 0%, #2d1e3a 100%);
   color: #ffff;
   box-shadow: 0 0 8px 2px #a5f3fc55, 0 0 16px 4px #a78bfa33;
-  
+
   border-image: linear-gradient(90deg, #a5f3fc 0%, #a78bfa 100%) 1;
   transition: transform 0.2s, box-shadow 0.2s;
 }
@@ -230,7 +279,6 @@ if (error.value) {
 }
 .github-btn:hover {
   transform: scale(1.22);
-
 }
 
 :deep(.swiper-pagination-bullet) {
@@ -264,5 +312,4 @@ if (error.value) {
   box-shadow: 0 8px 32px 0 #67e8f933, 0 0 0 8px #fff1;
   background: linear-gradient(180deg, #23244d 60%, #18181b 100%);
 }
-
-</style> 
+</style>

@@ -18,12 +18,32 @@
       <!-- Text content with code brackets -->
       <span class="text-container">
         <span class="bracket left">&lt;</span>
-        CV'mi indir
+        {{ currentLang === "tr" ? "CV'mi indir" : "Download my CV" }}
         <span class="bracket right">&gt;</span>
       </span>
     </a>
   </nav>
 </template>
+
+<script setup>
+import { ref, onMounted, onUnmounted } from "vue";
+
+const currentLang = ref(localStorage.getItem("language") || "tr");
+
+// Dil değişikliğini dinle
+const handleLanguageChange = () => {
+  const newLang = localStorage.getItem("language") || "tr";
+  currentLang.value = newLang;
+};
+
+onMounted(() => {
+  window.addEventListener("languageChanged", handleLanguageChange);
+});
+
+onUnmounted(() => {
+  window.removeEventListener("languageChanged", handleLanguageChange);
+});
+</script>
 
 <style scoped>
 /* Keyframe animations for the effects */

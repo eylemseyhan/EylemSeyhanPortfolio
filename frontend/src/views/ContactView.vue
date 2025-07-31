@@ -1,18 +1,34 @@
 <template>
-  <main class="min-h-[calc(100vh-200px)] py-8 sm:py-12 px-4 sm:px-6 lg:px-8" aria-label="İletişim">
+  <main
+    class="min-h-[calc(100vh-200px)] py-8 sm:py-12 px-4 sm:px-6 lg:px-8"
+    aria-label="İletişim"
+  >
     <section aria-labelledby="contact-title" class="max-w-2xl mx-auto">
       <div
         v-motion="{
           initial: { opacity: 0, y: 30 },
-          enter: { opacity: 1, y: 0, transition: { duration: 0.8, delay: 200 } }
+          enter: {
+            opacity: 1,
+            y: 0,
+            transition: { duration: 0.8, delay: 200 },
+          },
         }"
       >
-        <h1 id="contact-title" class="text-3xl sm:text-4xl font-bold mb-6 sm:mb-8 text-center bg-gradient-to-r from-accent to-accent-light bg-clip-text text-transparent">
-          İletişime Geç
+        <h1
+          id="contact-title"
+          class="text-3xl sm:text-4xl font-bold mb-6 sm:mb-8 text-center bg-gradient-to-r from-accent to-accent-light bg-clip-text text-transparent"
+        >
+          {{ currentLang === "tr" ? "İletişime Geç" : "Get in Touch" }}
         </h1>
       </div>
-      <div class="bg-dark-lighter/50 backdrop-blur rounded-2xl border border-gray-600 p-4 sm:p-6 lg:p-8">
-        <form @submit.prevent="handleSubmit" class="space-y-4 sm:space-y-6" aria-label="İletişim Formu">
+      <div
+        class="bg-dark-lighter/50 backdrop-blur rounded-2xl border border-gray-600 p-4 sm:p-6 lg:p-8"
+      >
+        <form
+          @submit.prevent="handleSubmit"
+          class="space-y-4 sm:space-y-6"
+          aria-label="İletişim Formu"
+        >
           <!-- Honeypot alanı: botlar için gizli input -->
           <input
             type="text"
@@ -23,7 +39,11 @@
             aria-hidden="true"
           />
           <div>
-            <label for="name" class="block text-sm font-medium text-gray-300 mb-2">Ad Soyad</label>
+            <label
+              for="name"
+              class="block text-sm font-medium text-gray-300 mb-2"
+              >{{ currentLang === "tr" ? "Ad Soyad" : "Full Name" }}</label
+            >
             <input
               id="name"
               type="text"
@@ -36,7 +56,11 @@
             />
           </div>
           <div>
-            <label for="email" class="block text-sm font-medium text-gray-300 mb-2">E-posta</label>
+            <label
+              for="email"
+              class="block text-sm font-medium text-gray-300 mb-2"
+              >{{ currentLang === "tr" ? "E-posta" : "Email" }}</label
+            >
             <input
               id="email"
               type="email"
@@ -49,31 +73,50 @@
             />
           </div>
           <div>
-            <label for="phone" class="block text-sm font-medium text-gray-300 mb-2">Telefon (Opsiyonel)</label>
+            <label
+              for="phone"
+              class="block text-sm font-medium text-gray-300 mb-2"
+              >{{
+                currentLang === "tr"
+                  ? "Telefon (Opsiyonel)"
+                  : "Phone (Optional)"
+              }}</label
+            >
             <input
               id="phone"
               type="tel"
               v-model="form.phone"
               maxlength="15"
-              placeholder="+90 5XX XXX XX XX"
+              :placeholder="
+                currentLang === 'tr' ? '+90 5XX XXX XX XX' : '+90 5XX XXX XX XX'
+              "
               class="w-full px-3 sm:px-4 py-3 bg-dark-lighter border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 text-white transition-all duration-300 text-sm sm:text-base"
               autocomplete="tel"
             />
           </div>
           <div>
-            <label for="message" class="block text-sm font-medium text-gray-300 mb-2">Mesajınız</label>
+            <label
+              for="message"
+              class="block text-sm font-medium text-gray-300 mb-2"
+              >{{ currentLang === "tr" ? "Mesajınız" : "Your Message" }}</label
+            >
             <textarea
               id="message"
               v-model="form.message"
               rows="4"
               maxlength="500"
               required
-              placeholder="Mesajınızı buraya yazın..."
+              :placeholder="
+                currentLang === 'tr'
+                  ? 'Mesajınızı buraya yazın...'
+                  : 'Write your message here...'
+              "
               class="w-full px-3 sm:px-4 py-3 bg-dark-lighter border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 text-white transition-all duration-300 text-sm sm:text-base resize-none"
               aria-required="true"
             ></textarea>
             <div class="text-xs text-gray-500 mt-1 text-right">
-              {{ form.message.length }}/500 karakter
+              {{ form.message.length }}/500
+              {{ currentLang === "tr" ? "karakter" : "characters" }}
             </div>
           </div>
           <button
@@ -82,28 +125,92 @@
             class="w-full px-4 sm:px-6 py-3 bg-gradient-to-r from-purple-500 to-cyan-500 hover:from-cyan-500 hover:to-purple-500 transition-all duration-300 rounded-lg font-medium disabled:opacity-50 hover:scale-105 ring-2 ring-transparent hover:ring-purple-500 flex items-center justify-center gap-2 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-accent"
             aria-label="Formu Gönder"
           >
-            <svg v-if="loading" class="w-4 h-4 sm:w-5 sm:h-5 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+            <svg
+              v-if="loading"
+              class="w-4 h-4 sm:w-5 sm:h-5 animate-spin"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+              />
             </svg>
-            <svg v-else class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+            <svg
+              v-else
+              class="w-4 h-4 sm:w-5 sm:h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M3 8l7.89 4.26a2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+              />
             </svg>
-            {{ loading ? 'Gönderiliyor...' : 'Gönder' }}
+            {{
+              loading
+                ? currentLang === "tr"
+                  ? "Gönderiliyor..."
+                  : "Sending..."
+                : currentLang === "tr"
+                ? "Gönder"
+                : "Send"
+            }}
           </button>
         </form>
         <!-- Başarı ve hata mesajları -->
         <transition name="fade">
-          <div v-if="success" class="flex items-center gap-3 p-4 bg-green-500/10 border border-green-500 rounded-lg text-green-500 shadow-lg animate-fade-in mt-6">
-            <svg class="w-6 h-6 text-green-500 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+          <div
+            v-if="success"
+            class="flex items-center gap-3 p-4 bg-green-500/10 border border-green-500 rounded-lg text-green-500 shadow-lg animate-fade-in mt-6"
+          >
+            <svg
+              class="w-6 h-6 text-green-500 animate-bounce"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M5 13l4 4L19 7"
+              />
             </svg>
-            <span class="text-base font-semibold">Mesajınız başarıyla gönderildi! En kısa sürede size döneceğim.</span>
+            <span class="text-base font-semibold">{{
+              currentLang === "tr"
+                ? "Mesajınız başarıyla gönderildi! En kısa sürede size döneceğim."
+                : "Your message has been sent successfully! I'll get back to you as soon as possible."
+            }}</span>
           </div>
         </transition>
         <transition name="fade">
-          <div v-if="error" class="flex items-center gap-3 p-4 bg-red-500/10 border border-red-500 rounded-lg text-red-500 shadow-lg animate-fade-in mt-6">
-            <svg class="w-6 h-6 text-red-500 animate-shake" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          <div
+            v-if="error"
+            class="flex items-center gap-3 p-4 bg-red-500/10 border border-red-500 rounded-lg text-red-500 shadow-lg animate-fade-in mt-6"
+          >
+            <svg
+              class="w-6 h-6 text-red-500 animate-shake"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
             </svg>
             <span class="text-base font-semibold">{{ error }}</span>
           </div>
@@ -114,70 +221,95 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
-import { sendContactForm } from '@/api'
+import { ref, computed, onMounted, onUnmounted } from "vue";
+import { sendContactForm } from "@/api";
+
+const currentLang = ref(localStorage.getItem("language") || "tr");
 
 // Form state
 const form = ref({
-  name: '',
-  email: '',
-  phone: '',
-  message: '',
-  botCheck: '' // honeypot alanı
-})
+  name: "",
+  email: "",
+  phone: "",
+  message: "",
+  botCheck: "", // honeypot alanı
+});
 
-const loading = ref(false)
-const success = ref(false)
-const error = ref('')
+const loading = ref(false);
+const success = ref(false);
+const error = ref("");
 
 const isFormValid = computed(() => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return (
-    form.value.name.trim() !== '' &&
-    form.value.email.trim() !== '' &&
+    form.value.name.trim() !== "" &&
+    form.value.email.trim() !== "" &&
     emailRegex.test(form.value.email) &&
-    form.value.message.trim() !== '' &&
+    form.value.message.trim() !== "" &&
     form.value.name.length <= 50 &&
     form.value.email.length <= 100 &&
     form.value.message.length >= 10
-  )
-})
+  );
+});
 
 const handleSubmit = async () => {
-  if (form.value.botCheck !== '') {
-    error.value = 'Bot olduğunuzdan şüphelenildi.';
-    setTimeout(() => error.value = '', 3000);
+  if (form.value.botCheck !== "") {
+    error.value =
+      currentLang.value === "tr"
+        ? "Bot olduğunuzdan şüphelenildi."
+        : "You are suspected to be a bot.";
+    setTimeout(() => (error.value = ""), 3000);
     return;
   }
   if (!isFormValid.value) {
-    error.value = 'Lütfen tüm alanları doğru şekilde doldurun.'
-    setTimeout(() => error.value = '', 3000);
-    return
+    error.value =
+      currentLang.value === "tr"
+        ? "Lütfen tüm alanları doğru şekilde doldurun."
+        : "Please fill in all fields correctly.";
+    setTimeout(() => (error.value = ""), 3000);
+    return;
   }
 
-  loading.value = true
-  error.value = ''
-  success.value = false
+  loading.value = true;
+  error.value = "";
+  success.value = false;
 
   try {
     // Backend API'ye gönder
-    await sendContactForm(form.value)
+    await sendContactForm(form.value);
 
-    success.value = true
-    form.value = { name: '', email: '', phone: '', message: '', botCheck: '' }
-    
+    success.value = true;
+    form.value = { name: "", email: "", phone: "", message: "", botCheck: "" };
+
     setTimeout(() => {
-      success.value = false
-    }, 5000)
-    
+      success.value = false;
+    }, 5000);
   } catch (err) {
-    console.error('Error sending message:', err)
-    error.value = err.message || 'Mesaj gönderilirken bir hata oluştu. Lütfen tekrar deneyin.'
-    setTimeout(() => error.value = '', 5000);
+    console.error("Error sending message:", err);
+    error.value =
+      err.message ||
+      (currentLang.value === "tr"
+        ? "Mesaj gönderilirken bir hata oluştu. Lütfen tekrar deneyin."
+        : "An error occurred while sending the message. Please try again.");
+    setTimeout(() => (error.value = ""), 5000);
   } finally {
-    loading.value = false
+    loading.value = false;
   }
-}
+};
+
+// Dil değişikliğini dinle
+const handleLanguageChange = () => {
+  const newLang = localStorage.getItem("language") || "tr";
+  currentLang.value = newLang;
+};
+
+onMounted(() => {
+  window.addEventListener("languageChanged", handleLanguageChange);
+});
+
+onUnmounted(() => {
+  window.removeEventListener("languageChanged", handleLanguageChange);
+});
 </script>
 
 <style scoped>
@@ -186,7 +318,7 @@ const handleSubmit = async () => {
   z-index: 0;
 }
 .animated-border::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
   border-radius: inherit;
@@ -197,16 +329,31 @@ const handleSubmit = async () => {
   z-index: -1;
 }
 @keyframes borderAnim {
-  0% { background-position: 0% 50% }
-  50% { background-position: 100% 50% }
-  100% { background-position: 0% 50% }
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 @keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  20%, 60% { transform: translateX(-6px); }
-  40%, 80% { transform: translateX(6px); }
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  20%,
+  60% {
+    transform: translateX(-6px);
+  }
+  40%,
+  80% {
+    transform: translateX(6px);
+  }
 }
 .animate-shake {
   animation: shake 0.5s;
 }
-</style> 
+</style>

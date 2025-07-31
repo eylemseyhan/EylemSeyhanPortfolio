@@ -9,34 +9,74 @@
       <span v-if="showCursor" class="cursor">|</span>
     </h1>
     <p class="text-lg font-light">
-      Trakya Üniversitesi Bilgisayar Mühendisliği mezunuyum.
+      {{
+        currentLang === "tr"
+          ? "Trakya Üniversitesi Bilgisayar Mühendisliği mezunuyum."
+          : "I'm a Computer Engineering graduate from Trakya University."
+      }}
     </p>
     <p class="text-lg font-light">
-      React, Vue, .NET ve Firebase gibi teknolojilerle fullstack web
-      uygulamaları geliştiriyorum.
+      {{
+        currentLang === "tr"
+          ? "React, Vue, .NET ve Firebase gibi teknolojilerle fullstack web uygulamaları geliştiriyorum."
+          : "I develop fullstack web applications with technologies like React, Vue, .NET and Firebase."
+      }}
     </p>
     <slot name="buttons" />
   </section>
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, onUnmounted } from "vue";
 
-const fullText = "Hoş geldin, ben Eylem.";
 const displayedText = ref("");
 const showCursor = ref(true);
+const currentLang = ref(localStorage.getItem("language") || "tr");
 let currentIndex = 0;
+let typingInterval = null;
 
-onMounted(() => {
-  const typingInterval = setInterval(() => {
-    if (currentIndex < fullText.length) {
-      displayedText.value += fullText[currentIndex];
+const getGreeting = () => {
+  return currentLang.value === "tr"
+    ? "Hoş geldin, ben Eylem."
+    : "Hello, I'm Eylem.";
+};
+
+const startTyping = () => {
+  // Önceki animasyonu temizle
+  if (typingInterval) {
+    clearInterval(typingInterval);
+  }
+
+  const greeting = getGreeting();
+  displayedText.value = "";
+  currentIndex = 0;
+  showCursor.value = true;
+
+  typingInterval = setInterval(() => {
+    if (currentIndex < greeting.length) {
+      displayedText.value += greeting[currentIndex];
       currentIndex++;
     } else {
       clearInterval(typingInterval);
-      showCursor.value = false; // Yazı tamamlandığında cursor durdurulsun
+      showCursor.value = false;
     }
   }, 100);
+};
+
+// Dil değişikliğini dinle
+const handleLanguageChange = () => {
+  const newLang = localStorage.getItem("language") || "tr";
+  currentLang.value = newLang;
+  startTyping();
+};
+
+onMounted(() => {
+  startTyping();
+  window.addEventListener("languageChanged", handleLanguageChange);
+});
+
+onUnmounted(() => {
+  window.removeEventListener("languageChanged", handleLanguageChange);
 });
 </script>
 

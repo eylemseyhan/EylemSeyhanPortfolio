@@ -1,13 +1,31 @@
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { useDark, useToggle } from "@vueuse/core";
 import { SunIcon, MoonIcon } from "@heroicons/vue/24/outline";
 import { defineAsyncComponent, Suspense } from "vue";
 import Hero from "./components/Hero.vue";
 import Cursor from "./components/Cursor.vue";
 import OrbBubbles from "./components/OrbBubbles.vue";
+import LanguageSwitcher from "./components/LanguageSwitcher.vue";
 
 const navOpen = ref(false);
+const currentLang = ref(localStorage.getItem("language") || "tr");
+
+const navTexts = computed(() => ({
+  home: currentLang.value === "tr" ? "ana sayfa" : "home",
+  projects: currentLang.value === "tr" ? "projeler" : "projects",
+  contact: currentLang.value === "tr" ? "iletişim" : "contact",
+}));
+
+// Dil değişikliğini dinle
+const handleLanguageChange = () => {
+  const newLang = localStorage.getItem("language") || "tr";
+  currentLang.value = newLang;
+};
+
+onMounted(() => {
+  window.addEventListener("languageChanged", handleLanguageChange);
+});
 </script>
 
 <template>
@@ -20,6 +38,9 @@ const navOpen = ref(false);
     <nav
       class="fixed top-0 left-0 w-full flex justify-between items-center px-4 sm:px-6 lg:px-8 py-3 sm:py-4 bg-gray-900/80 backdrop-blur shadow-md z-50 transition-all duration-300"
     >
+      <!-- Language Switcher -->
+      <LanguageSwitcher />
+
       <!-- Brand -->
       <router-link
         to="/"
@@ -33,7 +54,7 @@ const navOpen = ref(false);
             to="/"
             class="nav-modern group"
             exact-active-class="active-link"
-            >ana sayfa</router-link
+            >{{ navTexts.home }}</router-link
           >
         </li>
         <li>
@@ -41,7 +62,7 @@ const navOpen = ref(false);
             to="/projects"
             class="nav-modern group"
             exact-active-class="active-link"
-            >projeler</router-link
+            >{{ navTexts.projects }}</router-link
           >
         </li>
         <li>
@@ -49,7 +70,7 @@ const navOpen = ref(false);
             to="/contact"
             class="nav-modern group"
             exact-active-class="active-link"
-            >iletişim</router-link
+            >{{ navTexts.contact }}</router-link
           >
         </li>
       </ul>
@@ -101,7 +122,7 @@ const navOpen = ref(false);
             class="nav-modern-mobile"
             exact-active-class="active-link"
             @click="navOpen = false"
-            >ana sayfa</router-link
+            >{{ navTexts.home }}</router-link
           >
         </li>
         <li>
@@ -110,7 +131,7 @@ const navOpen = ref(false);
             class="nav-modern-mobile"
             exact-active-class="active-link"
             @click="navOpen = false"
-            >projeler</router-link
+            >{{ navTexts.projects }}</router-link
           >
         </li>
         <li>
@@ -119,7 +140,7 @@ const navOpen = ref(false);
             class="nav-modern-mobile"
             exact-active-class="active-link"
             @click="navOpen = false"
-            >iletişim</router-link
+            >{{ navTexts.contact }}</router-link
           >
         </li>
       </ul>
@@ -133,7 +154,10 @@ const navOpen = ref(false);
 
     <!-- Footer -->
     <footer class="w-full text-xs text-gray-500 text-center py-4 bg-gray-900">
-      © {{ new Date().getFullYear() }} Eylem Seyhan. Tüm hakları saklıdır.
+      © {{ new Date().getFullYear() }} Eylem Seyhan.
+      {{
+        currentLang === "tr" ? "Tüm hakları saklıdır." : "All rights reserved."
+      }}
     </footer>
   </div>
 </template>

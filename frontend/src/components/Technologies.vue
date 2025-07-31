@@ -5,7 +5,9 @@
     aria-labelledby="tech-title"
   >
     <h2 id="tech-title" class="technologies-title cursor-hover">
-      Kullandığım Teknolojiler
+      {{
+        currentLang === "tr" ? "Kullandığım Teknolojiler" : "Technologies I Use"
+      }}
     </h2>
     <div class="technologies-grid">
       <!-- Frontend Block -->
@@ -49,6 +51,7 @@
 </template>
 
 <script setup>
+import { ref, onMounted, onUnmounted } from "vue";
 import {
   CodeBracketIcon,
   PaintBrushIcon,
@@ -57,6 +60,8 @@ import {
   CpuChipIcon,
   GlobeAltIcon,
 } from "@heroicons/vue/24/solid";
+
+const currentLang = ref(localStorage.getItem("language") || "tr");
 
 const frontendTech = [
   { name: "Vue.js", icon: PaintBrushIcon, color: "text-cyan-300" },
@@ -70,6 +75,20 @@ const backendTech = [
   { name: ".NET", icon: GlobeAltIcon, color: "text-purple-400" },
   { name: "Node.js", icon: ServerStackIcon, color: "text-lime-400" },
 ];
+
+// Dil değişikliğini dinle
+const handleLanguageChange = () => {
+  const newLang = localStorage.getItem("language") || "tr";
+  currentLang.value = newLang;
+};
+
+onMounted(() => {
+  window.addEventListener("languageChanged", handleLanguageChange);
+});
+
+onUnmounted(() => {
+  window.removeEventListener("languageChanged", handleLanguageChange);
+});
 </script>
 
 <style scoped>

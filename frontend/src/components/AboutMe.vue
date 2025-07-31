@@ -1,6 +1,8 @@
 <template>
   <div class="aboutme-container">
-    <h2 class="aboutme-title cursor-hover">Deneyimlerim</h2>
+    <h2 class="aboutme-title cursor-hover">
+      {{ currentLang === "tr" ? "Deneyimlerim" : "My Experience" }}
+    </h2>
     <div class="timeline-zigzag">
       <div
         v-for="(exp, i) in experiences"
@@ -28,7 +30,10 @@
 </template>
 
 <script setup>
-const experiences = [
+import { computed, ref, onMounted, onUnmounted } from "vue";
+
+// Statik experiences array'leri
+const trExperiences = [
   {
     title: "Part Time Developer",
     company: "DDI Teknoloji",
@@ -57,9 +62,64 @@ const experiences = [
     title: "Denizaşırı Online Intern",
     company: "DenizBank",
     date: "Kasım - Aralık 2021",
-    desc: 'Program süresince iletişimden insan kaynaklarına, bankacılık süreçlerinden dijital dönüşüme kadar birçok alanda uzmanlardan eğitimler aldım. Kahoot yarışmaları, vaka analizleri ve "Birbirinden Öğrenme" oturumlarıyla interaktif bir deneyim yaşadım. Hazine, yatırım bankacılığı, risk yönetimi gibi teknik konularla ilgili sunumlara katılarak bankacılıkla ilgili genel bir perspektif kazandım.',
+    desc: "Program süresince iletişimden insan kaynaklarına, bankacılık süreçlerinden dijital dönüşüme kadar birçok alanda uzmanlardan eğitimler aldım. Kahoot yarışmaları, vaka analizleri ve 'Birbirinden Öğrenme' oturumlarıyla interaktif bir deneyim yaşadım. Hazine, yatırım bankacılığı, risk yönetimi gibi teknik konularla ilgili sunumlara katılarak bankacılıkla ilgili genel bir perspektif kazandım.",
   },
 ];
+
+const enExperiences = [
+  {
+    title: "Part Time Developer",
+    company: "DDI Technology",
+    date: "April - July 2025",
+    desc: "I developed unit and integration tests for .NET modules integrated with NLua and prepared detailed documentation for the installation, usage and maintenance of these scripts.",
+  },
+  {
+    title: "Intern",
+    company: "Enerjisa Production",
+    date: "August - September 2024",
+    desc: "I developed the Power Plant App application with .NET Core and Identity, making authentication and authorization processes secure. CRUD operations such as adding, updating and detailed data viewing of power plants can be performed according to user permissions.",
+  },
+  {
+    title: "Intern",
+    company: "General Directorate of State Hydraulic Works",
+    date: "July - August 2024",
+    desc: "I developed a web application called DSİ Athletic Club Management System with ASP.NET MVC. This system was designed to manage student registrations, sports branches and course participations. I managed database operations with Entity Framework in the project, created the user interface with HTML, CSS, JavaScript and jQuery. I visualized statistics such as total number of students, active athletes and participation rate on the dashboard screen.",
+  },
+  {
+    title: "AI Intern",
+    company: "Abdi İbrahim",
+    date: "March - June 2024",
+    desc: "I developed an AI-powered Question-Answer system based on LangChain and OpenAI that extracts responses from PDF documents through vector indexing and prompt engineering.",
+  },
+  {
+    title: "Overseas Online Intern",
+    company: "DenizBank",
+    date: "November - December 2021",
+    desc: "During the program, I received training from experts in many areas from communication to human resources, from banking processes to digital transformation. I experienced an interactive experience with Kahoot competitions, case analyses and 'Learning from Each Other' sessions. I gained a general perspective on banking by participating in presentations on technical topics such as treasury, investment banking, and risk management.",
+  },
+];
+
+// Mevcut dili localStorage'dan al
+const currentLang = ref(localStorage.getItem("language") || "tr");
+
+// Experiences'i dile göre seç
+const experiences = computed(() => {
+  return currentLang.value === "tr" ? trExperiences : enExperiences;
+});
+
+// Dil değişikliğini dinle
+const handleLanguageChange = () => {
+  const newLang = localStorage.getItem("language") || "tr";
+  currentLang.value = newLang;
+};
+
+onMounted(() => {
+  window.addEventListener("languageChanged", handleLanguageChange);
+});
+
+onUnmounted(() => {
+  window.removeEventListener("languageChanged", handleLanguageChange);
+});
 </script>
 
 <style scoped>
