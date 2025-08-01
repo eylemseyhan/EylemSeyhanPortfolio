@@ -2,6 +2,30 @@
   <main
     class="min-h-screen py-12 px-4 sm:px-6 lg:px-8 relative overflow-x-hidden"
   >
+    <!-- Geri Dönüş Butonu -->
+    <div class="max-w-4xl mx-auto mb-6">
+      <button
+        @click="goBack"
+        class="neon-btn-back flex items-center gap-2 text-cyan-300 hover:text-cyan-200 transition-colors"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="w-5 h-5"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M15 19l-7-7 7-7"
+          />
+        </svg>
+        <span>Projelere Geri Dön</span>
+      </button>
+    </div>
+
     <div
       v-if="loading"
       class="text-center text-white animate-pulse mt-32 text-xl font-semibold"
@@ -147,14 +171,19 @@
 
 <script setup>
 import { onMounted, ref, onBeforeUnmount } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { useProject } from "@/composables/useProject";
 
 const route = useRoute();
+const router = useRouter();
 const projectId = route.params.id;
 const { project, loading, error, loadProject } = useProject(projectId);
 
 const modalImage = ref(null);
+
+function goBack() {
+  router.push("/projects");
+}
 
 function openModal(image) {
   modalImage.value = image;
@@ -179,6 +208,20 @@ onMounted(loadProject);
 </script>
 
 <style scoped>
+/* Geri Dönüş Butonu */
+.neon-btn-back {
+  @apply px-4 py-2 rounded-lg font-medium transition-all duration-200;
+  background: linear-gradient(90deg, #23244d 60%, #22d3ee33 100%);
+  border: 1px solid #a5f3fc44;
+  box-shadow: 0 0 8px #67e8f955;
+}
+.neon-btn-back:hover {
+  background: linear-gradient(90deg, #22d3ee33 0%, #a78bfa33 100%);
+  border-color: #a5f3fc;
+  box-shadow: 0 0 16px #a5f3fc99;
+  transform: translateX(-4px);
+}
+
 /* Neon Gradient Text + Glow */
 .gradient-text-glow {
   background: linear-gradient(90deg, #67e8f9, #a78bfa 60%, #22d3ee 100%);
