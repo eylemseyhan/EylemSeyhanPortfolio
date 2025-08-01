@@ -7,13 +7,12 @@ export function useProjects() {
     const error = ref(null);
     const retryCount = ref(0);
     const maxRetries = 3;
-    const currentLang = ref(localStorage.getItem("language") || "tr");
 
     const loadProjects = async() => {
         loading.value = true;
         error.value = null;
         try {
-            projects.value = await fetchProjects(currentLang.value);
+            projects.value = await fetchProjects();
             retryCount.value = 0; // Başarılı olursa retry sayacını sıfırla
         } catch (err) {
             error.value = err;
@@ -37,20 +36,8 @@ export function useProjects() {
         loadProjects();
     };
 
-    // Dil değişikliğini dinle
-    const handleLanguageChange = () => {
-        const newLang = localStorage.getItem("language") || "tr";
-        currentLang.value = newLang;
-        loadProjects(); // Dil değiştiğinde projeleri yeniden yükle
-    };
-
     onMounted(() => {
         loadProjects();
-        window.addEventListener("languageChanged", handleLanguageChange);
-    });
-
-    onUnmounted(() => {
-        window.removeEventListener("languageChanged", handleLanguageChange);
     });
 
     return {

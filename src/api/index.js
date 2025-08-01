@@ -27,27 +27,16 @@ const fetchWithTimeout = async(url, options = {}) => {
 
 /**
  * Projeleri getiren fonksiyon
- * @param {string} language - 'tr' veya 'en'
  * @returns {Promise<any>}
  */
-export const fetchProjects = async(language = "tr") => {
+export const fetchProjects = async() => {
     try {
-        const response = await fetchWithTimeout(
-            `${API_BASE_URL}/api/projects?lang=${language}`
-        );
+        const response = await fetchWithTimeout(`${API_BASE_URL}/api/projects`);
         if (!response.ok) {
             throw new Error("Projeler alınamadı.");
         }
         const projects = await response.json();
-
-        // Dil desteği için projeleri işle
-        return projects.map((project) => ({
-            ...project,
-            title: language === "en" && project.titleEn ? project.titleEn : project.title,
-            description: language === "en" && project.descriptionEn ?
-                project.descriptionEn :
-                project.description,
-        }));
+        return projects;
     } catch (error) {
         console.error("Projects fetch error:", error);
         throw new Error(error.message || "Projeler yüklenirken bir hata oluştu.");
@@ -57,28 +46,19 @@ export const fetchProjects = async(language = "tr") => {
 /**
  * Tek bir projeyi getiren fonksiyon
  * @param {string} projectId
- * @param {string} language - 'tr' veya 'en'
  * @returns {Promise<any>}
  */
-export const fetchProjectById = async(projectId, language = "tr") => {
+export const fetchProjectById = async(projectId) => {
     try {
         const response = await fetchWithTimeout(
-            `${API_BASE_URL}/api/projects/${projectId}?lang=${language}`
+            `${API_BASE_URL}/api/projects/${projectId}`
         );
         if (!response.ok) {
             const errorData = await response.json();
             throw new Error(errorData.error || "Proje bulunamadı.");
         }
         const project = await response.json();
-
-        // Dil desteği için projeyi işle
-        return {
-            ...project,
-            title: language === "en" && project.titleEn ? project.titleEn : project.title,
-            description: language === "en" && project.descriptionEn ?
-                project.descriptionEn :
-                project.description,
-        };
+        return project;
     } catch (error) {
         console.error("Project fetch error:", error);
         throw new Error(error.message || "Proje yüklenirken bir hata oluştu.");
