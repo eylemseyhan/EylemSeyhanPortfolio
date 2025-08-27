@@ -1,6 +1,6 @@
 <template>
   <main
-    class="min-h-[calc(100vh-200px)] py-8 sm:py-12 px-4 sm:px-6 lg:px-8"
+    class="min-h-[calc(100vh-200px)] py-8 sm:py-12 px-4 sm:px-6 lg:px-8 pt-24 sm:pt-28"
     aria-label="İletişim"
   >
     <section aria-labelledby="contact-title" class="max-w-2xl mx-auto">
