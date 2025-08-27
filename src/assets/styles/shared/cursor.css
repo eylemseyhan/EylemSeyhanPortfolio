@@ -1,0 +1,10 @@
+/* ===== CUSTOM CURSOR STYLES ===== */
+
+.custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  will-change: transform;
+  pointer-events: none;
+  z-index: 9999;
+}

@@ -1,20 +1,28 @@
-@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@100;200;300;400;500&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* Import shared styles */
+@import "./styles/shared/neon.css";
+@import "./styles/shared/animations.css";
+@import "./styles/shared/typography.css";
+@import "./styles/shared/cursor.css";
+@import "./styles/shared/components.css";
+
 @font-face {
-  font-family: 'Davetica';
-  src: url('/fonts/Davetica-Regular.otf') format('opentype');
+  font-family: "Davetica";
+  src: url("/fonts/Davetica-Regular.otf") format("opentype");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
 }
 
 /* Add other @font-face rules as needed */
-html, body {
+html,
+body {
   cursor: none !important;
 }
+
 html {
   scroll-behavior: smooth;
 }
@@ -26,7 +34,7 @@ body {
   text-rendering: optimizeSpeed;
   line-height: 1.5;
   overflow-x: hidden;
-  font-family: 'Lexend', Arial, sans-serif;
+  font-family: "Lexend", Arial, sans-serif;
 }
 
 a {
@@ -38,19 +46,25 @@ ul {
   list-style: none;
 }
 
-img, picture {
+img,
+picture {
   max-width: 100%;
   display: block;
 }
 
-input, button, textarea, select {
+input,
+button,
+textarea,
+select {
   font: inherit;
-  }
+}
 
 button {
   appearance: none;
 }
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
