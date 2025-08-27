@@ -48,13 +48,7 @@
       @swiper="onSwiper"
     >
       <swiper-slide v-for="(project, idx) in sliderProjects" :key="project.id">
-        <div
-          class="slider-card cursor-pointer"
-          @click="goDetail(project.id)"
-          tabindex="0"
-          @keydown.enter="goDetail(project.id)"
-          @keydown.space.prevent="goDetail(project.id)"
-        >
+        <div class="slider-card">
           <div class="w-full flex items-center justify-center gap-4 py-4">
             <div
               class="w-full aspect-w-16 aspect-h-9 flex items-center justify-center bg-gray-800 rounded-2xl overflow-hidden"
@@ -89,7 +83,6 @@
               :href="project.githubUrl"
               target="_blank"
               class="github-btn flex items-center justify-center bg-transparent shadow-none border-none p-0 hover:bg-transparent"
-              @click.stop
               :aria-label="`GitHub: ${project.title}`"
             >
               <svg
@@ -119,7 +112,6 @@
 
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from "vue";
-import { useRouter } from "vue-router";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Navigation, Pagination } from "swiper/modules";
 import "swiper/css";
@@ -132,7 +124,6 @@ const currentLang = ref(localStorage.getItem("language") || "tr");
 const { projects: allProjects, loading, error } = useProjects();
 const swiperRef = ref(null);
 const swiperInstance = ref(null);
-const router = useRouter();
 
 const sliderProjects = computed(() => allProjects.value.slice(0, 5));
 
@@ -141,11 +132,6 @@ function goPrev() {
 }
 function goNext() {
   swiperInstance.value?.slideNext();
-}
-
-function goDetail(id) {
-  if (!id) return;
-  router.push({ name: "project-detail", params: { id } });
 }
 
 function onSwiper(swiper) {

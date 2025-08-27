@@ -82,8 +82,109 @@ const orbStyle = (orb) => ({
   animationDirection: "alternate",
 });
 </script>
-
 <style scoped>
-/* Component-specific styles only */
-/* Ortak stiller artık shared dosyalarda */
+.orb-bubbles {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+}
+.orb {
+  border-radius: 50%;
+  opacity: 0.9;
+  transition: filter 0.3s, transform 0.3s, box-shadow 0.3s;
+  will-change: transform, filter, box-shadow;
+}
+.orb:hover {
+  filter: blur(48px) drop-shadow(0 0 48px rgba(255, 255, 255, 0.18));
+  transform: scale(1.15);
+  box-shadow: 0 0 64px 16px rgba(167, 139, 250, 0.18),
+    0 0 32px 8px rgba(103, 232, 249, 0.12);
+  z-index: 2;
+}
+
+/* Orb Animasyonları */
+@keyframes orb-move-1 {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translate(-30px, -60px) scale(1.15);
+    opacity: 0.95;
+  }
+  100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.6;
+  }
+}
+@keyframes orb-move-2 {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(40px, 20px) rotate(5deg) scale(1.12);
+  }
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+}
+@keyframes orb-move-3 {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translate(-20px, -50px) rotate(-6deg) scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.7;
+  }
+}
+@keyframes orb-move-4 {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(15px, 30px) rotate(3deg) scale(1.08);
+  }
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+}
+@keyframes orb-move-5 {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.4;
+  }
+  50% {
+    transform: translate(-25px, 25px) scale(1.1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.4;
+  }
+}
+
+/* Animation class bindings */
+.orb-move-1 {
+  animation-name: orb-move-1;
+}
+.orb-move-2 {
+  animation-name: orb-move-2;
+}
+.orb-move-3 {
+  animation-name: orb-move-3;
+}
+.orb-move-4 {
+  animation-name: orb-move-4;
+}
+.orb-move-5 {
+  animation-name: orb-move-5;
+}
 </style>
