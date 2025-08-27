@@ -56,7 +56,8 @@
               <img
                 :src="project.coverImageUrl"
                 :alt="project.title"
-                class="max-h-full max-w-full object-contain"
+                class="max-h-full max-w-full object-contain cursor-pointer"
+                @click="goDetail(project.id)"
               />
             </div>
           </div>
@@ -83,6 +84,7 @@
               :href="project.githubUrl"
               target="_blank"
               class="github-btn flex items-center justify-center bg-transparent shadow-none border-none p-0 hover:bg-transparent"
+              @click.stop
               :aria-label="`GitHub: ${project.title}`"
             >
               <svg
@@ -112,6 +114,7 @@
 
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from "vue";
+import { useRouter } from "vue-router";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Navigation, Pagination } from "swiper/modules";
 import "swiper/css";
@@ -124,6 +127,7 @@ const currentLang = ref(localStorage.getItem("language") || "tr");
 const { projects: allProjects, loading, error } = useProjects();
 const swiperRef = ref(null);
 const swiperInstance = ref(null);
+const router = useRouter();
 
 const sliderProjects = computed(() => allProjects.value.slice(0, 5));
 
@@ -132,6 +136,10 @@ function goPrev() {
 }
 function goNext() {
   swiperInstance.value?.slideNext();
+}
+function goDetail(id) {
+  if (!id) return;
+  router.push({ name: "project-detail", params: { id } });
 }
 
 function onSwiper(swiper) {
