@@ -1,5 +1,5 @@
 <template>
-  <main class="min-h-screen py-12 px-4 sm:px-6 lg:px-8">
+  <main class="min-h-screen py-12 px-4 sm:px-6 lg:px-8 pt-24 sm:pt-28">
     <div class="max-w-7xl mx-auto">
       <div
         v-motion

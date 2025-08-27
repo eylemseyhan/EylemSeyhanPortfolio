@@ -1,6 +1,6 @@
 <template>
   <main
-    class="min-h-screen py-12 px-4 sm:px-6 lg:px-8 relative overflow-x-hidden"
+    class="min-h-screen py-12 px-4 sm:px-6 lg:px-8 relative overflow-x-hidden pt-24 sm:pt-28"
   >
     <!-- Geri Dönüş Butonu -->
     <div class="max-w-4xl mx-auto mb-6">
