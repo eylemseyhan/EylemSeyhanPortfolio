@@ -1,6 +1,7 @@
 <template>
   <main class="min-h-screen py-12 px-4 sm:px-6 lg:px-8 pt-24 sm:pt-28">
     <div class="max-w-7xl mx-auto">
+      <!-- Başlık -->
       <div
         v-motion
         :initial="{ opacity: 0, y: 30 }"
@@ -21,6 +22,7 @@
         </p>
       </div>
 
+      <!-- Yükleniyor -->
       <div v-if="loading" class="text-center py-12">
         <div
           class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-cyan-400 mb-4"
@@ -37,6 +39,8 @@
           {{ retryCount }}/3...
         </p>
       </div>
+
+      <!-- Hata -->
       <div v-else-if="error" class="text-center py-12">
         <div class="text-red-400 mb-4">
           <svg
@@ -50,7 +54,7 @@
               stroke-linejoin="round"
               stroke-width="2"
               d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"
-            ></path>
+            />
           </svg>
           <p class="text-lg font-semibold">
             {{
@@ -59,7 +63,9 @@
                 : "An error occurred while loading projects"
             }}
           </p>
-          <p class="text-sm text-gray-400 mt-1">{{ error.message }}</p>
+          <p class="text-sm text-gray-400 mt-1">
+            {{ error?.message ?? error }}
+          </p>
         </div>
         <button
           @click="retry"
@@ -69,6 +75,7 @@
         </button>
       </div>
 
+      <!-- Proje Listesi -->
       <transition-group
         v-else
         tag="ul"
@@ -88,7 +95,7 @@
         >
           <router-link
             :to="{ name: 'project-detail', params: { id: project.id } }"
-            class="project-card block"
+            class="project-card block group"
           >
             <div class="relative overflow-hidden rounded-lg">
               <img
@@ -111,7 +118,7 @@
               </p>
               <div class="flex flex-wrap gap-2">
                 <span
-                  v-for="tech in project.technologies.slice(0, 3)"
+                  v-for="tech in project.technologies?.slice(0, 3) || []"
                   :key="tech"
                   class="px-2 py-1 bg-gray-700 text-gray-300 text-xs rounded-full"
                 >
@@ -131,22 +138,18 @@ import { ref, onMounted, onUnmounted } from "vue";
 import { useProjects } from "@/composables/useProjects";
 
 const currentLang = ref(localStorage.getItem("language") || "tr");
-
 const { projects, loading, error, retry, retryCount } = useProjects();
 
-// Dil değişikliğini dinle
+// Sadece başlıktaki metin için dili dinle (liste verisi zaten composable içinde güncelleniyor)
 const handleLanguageChange = () => {
-  const newLang = localStorage.getItem("language") || "tr";
-  currentLang.value = newLang;
+  currentLang.value = localStorage.getItem("language") || "tr";
 };
-
-onMounted(() => {
-  window.addEventListener("languageChanged", handleLanguageChange);
-});
-
-onUnmounted(() => {
-  window.removeEventListener("languageChanged", handleLanguageChange);
-});
+onMounted(() =>
+  window.addEventListener("languageChanged", handleLanguageChange)
+);
+onUnmounted(() =>
+  window.removeEventListener("languageChanged", handleLanguageChange)
+);
 </script>
 
 <style scoped>
