@@ -67,6 +67,7 @@
             v-if="project.coverImageUrl"
             :src="project.coverImageUrl"
             :alt="titleText"
+            loading="eager"
             class="mx-auto rounded-2xl shadow-xl max-h-72 object-contain bg-gray-800 border-2 border-cyan-400/30 neon-img"
           />
         </div>

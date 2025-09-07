@@ -101,6 +101,7 @@
               <img
                 :src="project.coverImageUrl"
                 :alt="project.title"
+                loading="lazy"
                 class="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-110"
               />
               <div
