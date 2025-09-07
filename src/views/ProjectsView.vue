@@ -98,12 +98,23 @@
             class="project-card block group"
           >
             <div class="relative overflow-hidden rounded-lg">
-              <img
-                :src="project.coverImageUrl"
-                :alt="project.title"
-                loading="lazy"
-                class="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-110"
-              />
+              <picture>
+                <source
+                  :srcset="
+                    project.coverImageUrl?.replace(
+                      /\.(jpg|jpeg|png)$/i,
+                      '.webp'
+                    )
+                  "
+                  type="image/webp"
+                />
+                <img
+                  :src="project.coverImageUrl"
+                  :alt="project.title"
+                  loading="lazy"
+                  class="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-110"
+                />
+              </picture>
               <div
                 class="absolute inset-0 bg-black/40 group-hover:bg-black/60 transition-all duration-300"
               ></div>
