@@ -68,6 +68,8 @@
             :src="project.coverImageUrl"
             :alt="titleText"
             loading="eager"
+            width="600"
+            height="288"
             class="mx-auto rounded-2xl shadow-xl max-h-72 object-contain bg-gray-800 border-2 border-cyan-400/30 neon-img"
           />
         </div>

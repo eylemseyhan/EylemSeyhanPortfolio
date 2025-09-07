@@ -112,6 +112,8 @@
                   :src="project.coverImageUrl"
                   :alt="project.title"
                   loading="lazy"
+                  width="400"
+                  height="192"
                   class="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-110"
                 />
               </picture>
